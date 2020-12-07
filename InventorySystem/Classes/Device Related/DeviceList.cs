@@ -10,10 +10,12 @@ namespace InventorySystem.Classes.Device_Related
     class DeviceList
     {
         private List<DevicePC> PCList;
+        private List<DeviceMonitor> MonList;
 
         public DeviceList()
         {
             PCList = new List<DevicePC>();
+            MonList = new List<DeviceMonitor>();
         }
 
         public List<DevicePC> Get_PCList()
@@ -21,53 +23,105 @@ namespace InventorySystem.Classes.Device_Related
             return PCList;
         }
 
+        public List<DeviceMonitor> Get_MonList()
+        {
+            return MonList;
+        }
+
         public DevicePC Get_PC(string id)
         {
             return PCList[PCList.FindIndex(getinfo => getinfo.ID == id)];
         }
 
-        public void Add_PC(string id, string type, string name, DateTime RegDate,
+        public DeviceMonitor Get_Monitor(string id)
+        {
+            return MonList[MonList.FindIndex(getinfo => getinfo.ID == id)];
+        }
+
+        public void Add_PC(string id, Types type, string name, DateTime RegDate,
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
         {
             PCList.Add(new DevicePC(id, type, name, RegDate, ca, ps, motherb, cpu, ram, drive, gc));
         }
 
-        public void Change_PC(string id,  
+        public void Add_Monitor(string id, Types type, string name, DateTime RegDate,
+                           string diag, string res, string freq, string conn)
+        {
+            MonList.Add(new DeviceMonitor(id, type, name, RegDate, diag, res, freq, conn));
+        }
+
+        public void Change_PC(string id,
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
         {
             PCList.Find(getInfo => getInfo.ID == id).Rewrite(ca, ps, motherb, cpu, ram, drive, gc);
-           
+
         }
 
-        public bool Find_PC(string id, string type, string name, DateTime RegDate)
+        public void Change_Monitor(string id,
+                           string diag, string res, string freq, string conn)
         {
-            DevicePC found = PCList.Find(getinfo => getinfo.ID == id &&
-                                                    getinfo.Type == type &&
+            MonList.Find(getInfo => getInfo.ID == id).Rewrite(diag, res, freq, conn);
+
+        }
+
+        public bool Find_Device(string id, string name, DateTime RegDate)
+        {
+            if (PCList.Count > 0)
+            {
+                DevicePC found1 = PCList.Find(getinfo => getinfo.ID == id &&
+                                                   getinfo.Name == name &&
+                                                   getinfo.RegistrationDate == RegDate);
+                if (found1 != null)
+                    return true;
+            }
+
+            if (MonList.Count > 0)
+            {
+                DeviceMonitor found2 = MonList.Find(getinfo => getinfo.ID == id &&
                                                     getinfo.Name == name &&
                                                     getinfo.RegistrationDate == RegDate);
-
-            if (found != null)
-                return true;
+                if (found2 != null)
+                    return true;
+            }
 
             return false;
         }
 
-        public bool Find_PC_ID(string id)
+        public bool Find_Device_ID(string id)
         {
-            DevicePC found = PCList.Find(getinfo => getinfo.ID == id);
+            if (PCList.Count > 0)
+            {
+                DevicePC found1 = PCList.Find(getinfo => getinfo.ID == id);
+                if (found1 != null)
+                    return true;
+            }
 
-            if (found != null)
-                return true;
+            if (MonList.Count > 0)
+            {
+                DeviceMonitor found2 = MonList.Find(getinfo => getinfo.ID == id);
+                if (found2 != null)
+                    return true;
+            }
 
             return false;
         }
 
 
-        public void Delete_PC(string id)
+        public void Delete_Device(string id)
         {
             DevicePC pc_to_remove = PCList.Find(getinfo => getinfo.ID == id);
+            if (pc_to_remove != null)
+            {
+                PCList.Remove(pc_to_remove);
+                return;
+            }
 
-            PCList.Remove(pc_to_remove);
+            DeviceMonitor mon_to_remove = MonList.Find(getinfo => getinfo.ID == id);
+            if (mon_to_remove != null)
+            {
+                MonList.Remove(mon_to_remove);
+                return;
+            }     
         }
     }
 }

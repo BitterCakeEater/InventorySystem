@@ -17,88 +17,168 @@ namespace InventorySystem.Classes
 
             if(FAD.DialogResult == System.Windows.Forms.DialogResult.OK)
             {
-                //If ID number is already present
-                if (InvSysContainer.Find_PC_ID(FAD.richTextBox_ID.Text))
+                Types t;
+
+                if (FAD.radioButton_PC.Checked)
                 {
-                    MessageBox.Show(
-                    "Пристрій з таким ідентифікатором вже існує!",
-                    "Увага!",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button1);
+                    Form_Add_PC FAP = new Form_Add_PC();
+                    FAP.StartPosition = FormStartPosition.CenterParent;
+                    FAP.richTextBox_Type.ReadOnly = true;
+                    FAP.richTextBox_Type.Text = "PC";
+                    FAP.ShowDialog();
 
-                    Form_Add_Device New_FAD = new Form_Add_Device();
+                    t = Types.PC;
 
-                    New_FAD.richTextBox_Type.Text = FAD.richTextBox_Type.Text;
-                    New_FAD.richTextBox_Name.Text = FAD.richTextBox_Name.Text;
-                    New_FAD.richTextBox_Case.Text = FAD.richTextBox_Case.Text;
-                    New_FAD.richTextBox_PowerSupply.Text = FAD.richTextBox_PowerSupply.Text;
-                    New_FAD.richTextBox_Motherboard.Text = FAD.richTextBox_Motherboard.Text;
-                    New_FAD.richTextBox_CPU.Text = FAD.richTextBox_CPU.Text;
-                    New_FAD.richTextBox_RAM.Text = FAD.richTextBox_RAM.Text;
-                    New_FAD.richTextBox_Drive.Text = FAD.richTextBox_Drive.Text;
-                    New_FAD.richTextBox_GraphicsCard.Text = FAD.richTextBox_GraphicsCard.Text;
-                    New_FAD.StartPosition = FormStartPosition.CenterParent;
+                    if (InvSysContainer.Find_Device_ID(FAP.richTextBox_ID.Text))
+                    {
+                        while (InvSysContainer.Find_Device_ID(FAP.richTextBox_ID.Text))
+                        {
+                            MessageBox.Show(
+                            "Пристрій з таким ідентифікатором вже існує!",
+                            "Увага!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1);
 
-                    Add_Device(New_FAD, ref InvSysContainer);
-                }
-                else
-                {
-                    InvSysContainer.Add_PC(FAD.richTextBox_ID.Text,
-                                           FAD.richTextBox_Type.Text,
-                                           FAD.richTextBox_Name.Text, 
+                            FAP.ShowDialog();
+                        }
+                    }
+                    else
+                    {
+                        InvSysContainer.Add_PC(FAP.richTextBox_ID.Text,
+                                           t,
+                                           FAP.richTextBox_Name.Text,
                                            DateTime.Now,
-                                           FAD.richTextBox_Case.Text,
-                                           FAD.richTextBox_PowerSupply.Text,
-                                           FAD.richTextBox_Motherboard.Text,
-                                           FAD.richTextBox_CPU.Text,
-                                           FAD.richTextBox_RAM.Text,
-                                           FAD.richTextBox_Drive.Text,
-                                           FAD.richTextBox_GraphicsCard.Text);
+                                           FAP.richTextBox_Case.Text,
+                                           FAP.richTextBox_PowerSupply.Text,
+                                           FAP.richTextBox_Motherboard.Text,
+                                           FAP.richTextBox_CPU.Text,
+                                           FAP.richTextBox_RAM.Text,
+                                           FAP.richTextBox_Drive.Text,
+                                           FAP.richTextBox_GraphicsCard.Text);
+                        
+                    }
                 }
+                else if (FAD.radioButton_Monitor.Checked)
+                {
+                    Form_Add_Monitor FAM = new Form_Add_Monitor();
+                    FAM.StartPosition = FormStartPosition.CenterParent;
+                    FAM.richTextBox_Type.ReadOnly = true;
+                    FAM.richTextBox_Type.Text = "Monitor";
+                    FAM.ShowDialog();
+
+                    t = Types.Monitor;
+
+                    if (InvSysContainer.Find_Device_ID(FAM.richTextBox_ID.Text))
+                    {
+                        while (InvSysContainer.Find_Device_ID(FAM.richTextBox_ID.Text))
+                        {
+                            MessageBox.Show(
+                            "Пристрій з таким ідентифікатором вже існує!",
+                            "Увага!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1);
+
+                            FAM.ShowDialog();
+                        }
+                    }
+                    else
+                    {
+                        InvSysContainer.Add_Monitor(FAM.richTextBox_ID.Text,
+                                           t,
+                                           FAM.richTextBox_Name.Text,
+                                           DateTime.Now,
+                                           FAM.richTextBox_Diagonal.Text,
+                                           FAM.richTextBox_Resolution.Text,
+                                           FAM.richTextBox_Frequency.Text,
+                                           FAM.richTextBox_Connector.Text);
+
+                    }
+                }               
             }
 
             InvSysContainer.Save_Main_Device_List();
         }
 
 
-        public void Edit_Device(Form_Edit_Device FED, ref InventorySystemContainer InvSysContainer, string id)
+        public void Edit_Device(ref InventorySystemContainer InvSysContainer, string id, string type)
         {
-            DevicePC device = InvSysContainer.Get_PC(id);
-
-            FED.richTextBox_ID.Text = device.ID;
-            FED.richTextBox_Type.Text = device.Type;
-            FED.richTextBox_Name.Text = device.Name;
-            FED.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
-            FED.richTextBox_Case.Text = device.Case;
-            FED.richTextBox_PowerSupply.Text = device.PowerSupply;
-            FED.richTextBox_Motherboard.Text = device.Moterboard;
-            FED.richTextBox_CPU.Text = device.CPU;
-            FED.richTextBox_RAM.Text = device.RAM;
-            FED.richTextBox_Drive.Text = device.Drive;
-            FED.richTextBox_GraphicsCard.Text = device.GraphicsCard;
-            FED.StartPosition = FormStartPosition.CenterParent;
-
-            FED.richTextBox_ID.ReadOnly = true;
-            FED.richTextBox_Type.ReadOnly = true;
-            FED.richTextBox_Name.ReadOnly = true;
-            FED.richTextBox_RegDate.ReadOnly = true;
-
-            FED.ShowDialog();
-
-            if (FED.DialogResult == System.Windows.Forms.DialogResult.OK)
+            if (type == "PC")
             {
-                InvSysContainer.Change_PC(id,
-                                            FED.richTextBox_Case.Text,
-                                            FED.richTextBox_PowerSupply.Text,
-                                            FED.richTextBox_Motherboard.Text,
-                                            FED.richTextBox_CPU.Text,
-                                            FED.richTextBox_RAM.Text,
-                                            FED.richTextBox_Drive.Text,
-                                            FED.richTextBox_GraphicsCard.Text);
+                Form_Edit_PC FEP = new Form_Edit_PC();
 
-                InvSysContainer.Save_Main_Device_List();
-            }                
+                DevicePC device = InvSysContainer.Get_PC(id);
+
+                FEP.richTextBox_ID.Text = device.ID;
+                FEP.richTextBox_Type.Text = "PC";
+                FEP.richTextBox_Name.Text = device.Name;
+                FEP.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
+                FEP.richTextBox_Case.Text = device.Case;
+                FEP.richTextBox_PowerSupply.Text = device.PowerSupply;
+                FEP.richTextBox_Motherboard.Text = device.Moterboard;
+                FEP.richTextBox_CPU.Text = device.CPU;
+                FEP.richTextBox_RAM.Text = device.RAM;
+                FEP.richTextBox_Drive.Text = device.Drive;
+                FEP.richTextBox_GraphicsCard.Text = device.GraphicsCard;
+                FEP.StartPosition = FormStartPosition.CenterParent;
+
+                FEP.richTextBox_ID.ReadOnly = true;
+                FEP.richTextBox_Type.ReadOnly = true;
+                FEP.richTextBox_Name.ReadOnly = true;
+                FEP.richTextBox_RegDate.ReadOnly = true;
+
+                FEP.ShowDialog();
+
+                if (FEP.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    InvSysContainer.Change_PC(id,
+                                                FEP.richTextBox_Case.Text,
+                                                FEP.richTextBox_PowerSupply.Text,
+                                                FEP.richTextBox_Motherboard.Text,
+                                                FEP.richTextBox_CPU.Text,
+                                                FEP.richTextBox_RAM.Text,
+                                                FEP.richTextBox_Drive.Text,
+                                                FEP.richTextBox_GraphicsCard.Text);
+
+                    InvSysContainer.Save_Main_Device_List();
+                }
+            } 
+            
+            else if(type == "Monitor")
+            {
+                Form_Edit_Monitor FEM = new Form_Edit_Monitor();
+
+                DeviceMonitor device = InvSysContainer.Get_Monitor(id);
+
+                FEM.richTextBox_ID.Text = device.ID;
+                FEM.richTextBox_Type.Text = "Monitor";
+                FEM.richTextBox_Name.Text = device.Name;
+                FEM.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
+                FEM.richTextBox_Connector.Text = device.Connector;
+                FEM.richTextBox_Diagonal.Text = device.Diagonal;
+                FEM.richTextBox_Frequency.Text = device.Frequency;
+                FEM.richTextBox_Resolution.Text = device.Resolution;
+                FEM.StartPosition = FormStartPosition.CenterScreen;
+
+                FEM.richTextBox_ID.ReadOnly = true;
+                FEM.richTextBox_Type.ReadOnly = true;
+                FEM.richTextBox_Name.ReadOnly = true;
+                FEM.richTextBox_RegDate.ReadOnly = true;
+
+                FEM.ShowDialog();
+
+                if (FEM.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    InvSysContainer.Change_Monitor(id,
+                                                FEM.richTextBox_Connector.Text,
+                                                FEM.richTextBox_Diagonal.Text,
+                                                FEM.richTextBox_Frequency.Text,
+                                                FEM.richTextBox_Resolution.Text);
+
+                    InvSysContainer.Save_Main_Device_List();
+                }
+            }     
         }
 
 
@@ -112,7 +192,7 @@ namespace InventorySystem.Classes
            
             if (FDA.DialogResult == DialogResult.Yes)
             {
-                InvSysContainer.Delete_PC(id);
+                InvSysContainer.Delete_Device(id);
 
                 InvSysContainer.Save_Main_Device_List();
             }
@@ -133,231 +213,18 @@ namespace InventorySystem.Classes
             return rez;
         }
 
+        public List<DeviceMonitor> Find_Monitor(InventorySystemContainer InvSysContainer, string str_to_find)
+        {
+            List<DeviceMonitor> rez = new List<DeviceMonitor>();
 
-        //public void Add_Book_Section(Form_Add_Device FABS, ref LibraryContainer LibContainer)
-        //{
-        //    FABS.StartPosition = FormStartPosition.CenterParent;
-        //    FABS.ShowDialog();
+            IEnumerable<DeviceMonitor> r = InvSysContainer.Get_Main_Device_List().
+                                            Get_MonList().Where(getInfo =>
+                                                Convert.ToString(getInfo.ID).Contains(str_to_find) ||
+                                                Convert.ToString(getInfo.Name).Contains(str_to_find));
 
-        //    if (FABS.DialogResult == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        if (LibContainer.Find_Book_Section(FABS.richTextBox_ID.Text, FABS.richTextBox_Type.Text, Convert.ToInt32(FABS.richTextBox_Case.Text), FABS.richTextBox_PowerSupply.Text, FABS.richTextBox_Motherboard.Text))
-        //        {
-        //            MessageBox.Show(
-        //            "Ідентична книга вже існує!",
-        //            "Увага!",
-        //            MessageBoxButtons.OK,
-        //            MessageBoxIcon.Warning,
-        //            MessageBoxDefaultButton.Button1);
+            rez = r.ToList<DeviceMonitor>();
 
-        //            Form_Add_Device New_FABS = new Form_Add_Device();
-
-        //            New_FABS.richTextBox_CPU.Text = FABS.richTextBox_CPU.Text;
-        //            New_FABS.richTextBox_Type.Text = FABS.richTextBox_Type.Text;
-        //            New_FABS.richTextBox_Name.Text = FABS.richTextBox_Name.Text;
-        //            New_FABS.richTextBox_PowerSupply.Text = FABS.richTextBox_PowerSupply.Text;
-        //            New_FABS.richTextBox_Motherboard.Text = FABS.richTextBox_Motherboard.Text;
-        //            New_FABS.richTextBox_ID.Text = FABS.richTextBox_ID.Text;
-        //            New_FABS.richTextBox_Case.Text = FABS.richTextBox_Case.Text;
-        //            New_FABS.StartPosition = FormStartPosition.CenterParent;
-
-        //            Add_Book_Section(New_FABS, ref LibContainer);
-        //        }
-
-        //        else if(LibContainer.Get_Main_Catalog().Get_Book_Section(FABS.richTextBox_Name.Text) != null)
-        //        {
-        //            MessageBox.Show(
-        //            "Книга з таким шифром вже існує!",
-        //            "Увага!",
-        //            MessageBoxButtons.OK,
-        //            MessageBoxIcon.Warning,
-        //            MessageBoxDefaultButton.Button1);
-
-        //            Form_Add_Device New_FABS = new Form_Add_Device();
-
-        //            New_FABS.richTextBox_CPU.Text = FABS.richTextBox_CPU.Text;
-        //            New_FABS.richTextBox_Type.Text = FABS.richTextBox_Type.Text;
-        //            New_FABS.richTextBox_Name.Text = FABS.richTextBox_Name.Text;
-        //            New_FABS.richTextBox_PowerSupply.Text = FABS.richTextBox_PowerSupply.Text;
-        //            New_FABS.richTextBox_Motherboard.Text = FABS.richTextBox_Motherboard.Text;
-        //            New_FABS.richTextBox_ID.Text = FABS.richTextBox_ID.Text;
-        //            New_FABS.richTextBox_Case.Text = FABS.richTextBox_Case.Text;
-        //            New_FABS.StartPosition = FormStartPosition.CenterParent;
-
-        //            Add_Book_Section(New_FABS, ref LibContainer);
-        //        }
-
-        //        else
-        //            LibContainer.Add_Book_Section(FABS.richTextBox_ID.Text, 
-        //                                          FABS.richTextBox_Type.Text, 
-        //                                          FABS.richTextBox_Name.Text, 
-        //                                          Convert.ToInt32(FABS.richTextBox_Case.Text), 
-        //                                          FABS.richTextBox_PowerSupply.Text, FABS.richTextBox_Motherboard.Text, 
-        //                                          Convert.ToInt32(FABS.richTextBox_CPU.Text), 
-        //                                          Convert.ToInt32(FABS.richTextBox_CPU.Text));
-
-        //        LibContainer.Save_Main_Catalog();
-        //    }
-        //}
-
-
-        //public void Delete_Book_Section(ref LibraryContainer LibContainer, string library_cipher)
-        //{
-        //    Form_Delete_Attention FDA = new Form_Delete_Attention();
-
-        //    FDA.StartPosition = FormStartPosition.CenterParent;
-
-        //    FDA.label1.Text = "Ви дійсно бажаете видалити цей розділ книг?";
-
-        //    FDA.ShowDialog();
-
-        //    if (FDA.DialogResult == DialogResult.Yes)
-        //    {
-        //        foreach(var book in LibContainer.Get_Main_Catalog().Get_Book_Section(library_cipher).Get_Books_Copies())
-        //        {
-        //            if (!LibContainer.Get_Main_Catalog().Book_Is_Not_Taken(library_cipher, book.Number))
-        //            {
-        //                LibContainer.Get_Main_Catalog().Return_Book(library_cipher, 
-        //                                                            book.Number, 
-        //                                                            book.Story_Card.Get_Last_Record().Reader_Name, 
-        //                                                            book.Story_Card.Get_Last_Record().Reader_Card_Number);
-
-        //                LibContainer.Get_Main_Registration_List().Return_Book(LibContainer.Get_Main_Catalog().Get_Book(library_cipher, book.Number), 
-        //                                                                      book.Story_Card.Get_Last_Record().Reader_Card_Number);
-        //            }
-        //        }
-
-        //        LibContainer.Delete_Book_Section(library_cipher);
-
-        //        LibContainer.Save_Main_Catalog();
-        //        LibContainer.Save_Main_Registration_List();
-        //    }
-
-        //}
-
-
-        //public List<BookSection> Find_Book(LibraryContainer LibContainer, string str_to_find)
-        //{
-        //    List<BookSection> rez = new List<BookSection>();
-
-        //    IEnumerable<BookSection> r = LibContainer.Get_Main_Catalog().
-        //                                    Get_Books_List().Where(getInfo => 
-        //                                        Convert.ToString(getInfo.Library_Cipher).Contains(str_to_find) || 
-        //                                        Convert.ToString(getInfo.Title).Contains(str_to_find));
-
-        //    rez = r.ToList<BookSection>();
-
-        //    return rez;
-        //}
-
-
-        //public void Add_Book(ref LibraryContainer LibContainer, string library_cipher, int number)
-        //{
-        //    LibContainer.Get_Main_Catalog().Get_Book_Section(library_cipher).Add_Books_Copies(number);
-
-        //    LibContainer.Save_Main_Catalog();
-        //}
-
-
-        //public void Delete_Book(ref LibraryContainer LibContainer, string library_cipher, int number)
-        //{
-        //    Form_Delete_Attention FDA = new Form_Delete_Attention();
-
-        //    FDA.StartPosition = FormStartPosition.CenterParent;
-        //    FDA.label1.Text = "Ви дійсно бажаете видалити цю книгу?";
-
-        //    FDA.ShowDialog();
-
-        //    if (FDA.DialogResult == DialogResult.Yes)
-        //    {
-        //        var book = LibContainer.Get_Main_Catalog().Get_Book_Section(library_cipher).Get_Book(number);
-
-        //        if (!LibContainer.Get_Main_Catalog().Book_Is_Not_Taken(library_cipher, number))
-        //        {
-        //            LibContainer.Get_Main_Catalog().Return_Book(library_cipher, 
-        //                                                        number, 
-        //                                                        book.Story_Card.Get_Last_Record().Reader_Name, 
-        //                                                        book.Story_Card.Get_Last_Record().Reader_Card_Number);
-
-        //            LibContainer.Get_Main_Registration_List().Return_Book(LibContainer.Get_Main_Catalog().Get_Book(library_cipher, number), 
-        //                                                                  book.Story_Card.Get_Last_Record().Reader_Card_Number);
-        //        }
-
-        //        LibContainer.Get_Main_Catalog().Delete_Book(library_cipher, number);
-
-        //        LibContainer.Save_Main_Catalog();
-        //        LibContainer.Save_Main_Registration_List();
-        //    }              
-        //}
-
-
-        //public int Get_Amount_Of_Books(ref LibraryContainer LibContainer, string library_cipher)
-        //{
-        //    return LibContainer.Get_Main_Catalog().Get_Book_Section(library_cipher).Copies_Amount;
-        //}
-
-
-        //public int Get_Amount_Of_Available_Books(ref LibraryContainer LibContainer, string library_cipher)
-        //{
-        //    return LibContainer.Get_Main_Catalog().Get_Book_Section(library_cipher).Copies_Available;
-        //}
-
-
-        //public void Take_Book(ref LibraryContainer LibContainer, string library_cipher, int number, string reader_name, int reader_number)
-        //{
-        //    if(LibContainer.Get_Main_Catalog().Book_Is_Not_Taken(library_cipher, number))
-        //    {
-        //        LibContainer.Get_Main_Catalog().Take_Book(library_cipher, number, reader_name, reader_number);
-
-        //        LibContainer.Get_Main_Registration_List().Take_Book(LibContainer.Get_Main_Catalog().Get_Book(library_cipher, number), reader_number);
-
-        //        LibContainer.Save_Main_Catalog();
-        //        LibContainer.Save_Main_Registration_List();
-        //    }          
-        //}
-
-
-        //public void Return_Book(ref LibraryContainer LibContainer, string library_cipher, int number, string reader_name, int reader_number)
-        //{
-        //    if (!LibContainer.Get_Main_Catalog().Book_Is_Not_Taken(library_cipher, number))
-        //    {
-        //        LibContainer.Get_Main_Catalog().Return_Book(library_cipher, number, reader_name, reader_number);
-
-        //        LibContainer.Get_Main_Registration_List().Return_Book(LibContainer.Get_Main_Catalog().Get_Book(library_cipher, number), reader_number);
-
-        //        LibContainer.Save_Main_Catalog();
-        //        LibContainer.Save_Main_Registration_List();
-        //    }
-
-        //}
-
-
-        //public List<Book> Find_Books_By_Date(LibraryContainer LibContainer, DateTime from, DateTime to, bool taken)
-        //{
-        //    List<Book> found = new List<Book>();
-
-        //    foreach (var book_list in LibContainer.Get_Main_Catalog().Get_Books_List())
-
-        //        foreach (var book in book_list.Get_Books_Copies())
-
-        //            foreach (var record in book.Story_Card.Get_Record_List())
-
-        //                if (taken == true)
-        //                {
-        //                    if (record.Issue_Date.Date >= from.Date && record.Issue_Date.Date <= to.Date && !found.Contains(book))
-        //                    {
-        //                        found.Add(book);
-        //                        break;
-        //                    }
-        //                }
-        //                else
-        //                    if (record.Return_Date.Date >= from.Date && record.Return_Date.Date <= to.Date && !found.Contains(book))
-        //                    {
-        //                        found.Add(book);
-        //                        break;
-        //                    }
-
-        //    return found;
-        //}
+            return rez;
+        }
     }
 }

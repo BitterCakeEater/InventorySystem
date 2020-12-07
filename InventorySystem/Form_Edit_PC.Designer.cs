@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem
 {
-    partial class Form_Edit_Device
+    partial class Form_Edit_PC
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Edit_Device));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Edit_PC));
             this.richTextBox_ID = new System.Windows.Forms.RichTextBox();
             this.richTextBox_Type = new System.Windows.Forms.RichTextBox();
             this.richTextBox_Name = new System.Windows.Forms.RichTextBox();

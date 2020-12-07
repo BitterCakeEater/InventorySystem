@@ -47,20 +47,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Device Related\Device.cs" />
+    <Compile Include="Classes\Device Related\DeviceMonitor.cs" />
     <Compile Include="Classes\Device Related\DevicePC.cs" />
     <Compile Include="Classes\Device Related\DeviceList.cs" />
+    <Compile Include="Classes\Device Related\DevicePrinter.cs" />
     <Compile Include="Classes\FileSystem.cs" />
-    <Compile Include="Form_Edit_Device .cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Edit_Device .Designer.cs">
-      <DependentUpon>Form_Edit_Device .cs</DependentUpon>
-    </Compile>
     <Compile Include="Form_Add_Device.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form_Add_Device.Designer.cs">
       <DependentUpon>Form_Add_Device.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Add_Monitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Add_Monitor.Designer.cs">
+      <DependentUpon>Form_Add_Monitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Edit_Monitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Edit_Monitor.Designer.cs">
+      <DependentUpon>Form_Edit_Monitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Edit_PC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Edit_PC.Designer.cs">
+      <DependentUpon>Form_Edit_PC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Add_PC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Add_PC.Designer.cs">
+      <DependentUpon>Form_Add_PC.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Card.cs">
       <SubType>Form</SubType>
@@ -84,11 +104,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form_Edit_Device .resx">
-      <DependentUpon>Form_Edit_Device .cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form_Add_Device.resx">
       <DependentUpon>Form_Add_Device.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Add_Monitor.resx">
+      <DependentUpon>Form_Add_Monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Edit_Monitor.resx">
+      <DependentUpon>Form_Edit_Monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Edit_PC.resx">
+      <DependentUpon>Form_Edit_PC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Add_PC.resx">
+      <DependentUpon>Form_Add_PC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Card.ja.resx">
       <DependentUpon>Form_Card.cs</DependentUpon>

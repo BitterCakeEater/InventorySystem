@@ -17,7 +17,7 @@ namespace InventorySystem.Classes.Device_Related
         public string Drive { get; set; }
         public string GraphicsCard { get; set; }
 
-        public DevicePC(string id, string type, string name, DateTime RegDate,
+        public DevicePC(string id, Types type, string name, DateTime RegDate,
                         string ca, string ps, string motherb, string cpu, string ram, string drive, string gc) :
                         base(id, type, name, RegDate)
         {

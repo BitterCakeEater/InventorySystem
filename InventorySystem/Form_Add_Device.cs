@@ -17,59 +17,17 @@ namespace InventorySystem
             InitializeComponent();
         }
 
-        private void button_Add_Click(object sender, EventArgs e)
+        private void button_Apply_Click(object sender, EventArgs e)
         {
-            bool ok = true;
-            //int num;
+            if (!radioButton_Monitor.Checked && !radioButton_PC.Checked && !radioButton_Printer.Checked)
+                MessageBox.Show(
+                            "Оберіть тип присторю!",
+                            "Увага!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1);
 
-            //foreach (char symbol in richTextBox_Type.Text)
-            //{
-            //    if (char.IsDigit(symbol))
-            //    {
-            //        ok = false;
-
-            //        MessageBox.Show(
-            //            "Форма 'Автори' не може містити цифри!",
-            //            "Увага!",
-            //            MessageBoxButtons.OK,
-            //            MessageBoxIcon.Warning,
-            //            MessageBoxDefaultButton.Button1);
-
-            //        break;
-            //    }
-            //}
-
-
-            //if (Convert.ToInt32(richTextBox_Case.Text) > DateTime.Now.Year)
-            //{
-            //    ok = false;
-
-            //    MessageBox.Show(
-            //        "Невірно вказаний рік видання!",
-            //        "Увага!",
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Warning,
-            //        MessageBoxDefaultButton.Button1);
-            //}
-
-
-            //try
-            //{
-            //    num = Convert.ToInt32(richTextBox_Case.Text);
-            //}
-            //catch
-            //{
-            //    ok = false;
-
-            //    MessageBox.Show(
-            //        "Некорректна кількість екземплярів!",
-            //        "Увага!",
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Warning,
-            //        MessageBoxDefaultButton.Button1);
-            //}
-
-            if (ok == true)
+            else
                 this.DialogResult = DialogResult.OK;
         }
     }

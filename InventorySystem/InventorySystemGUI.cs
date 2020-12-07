@@ -44,28 +44,47 @@ namespace InventorySystem
         {
             dataGridView_List.Rows.Clear();
 
-            List<DevicePC> list = MainInvSysContainer.Get_Main_Device_List().Get_PCList();
+            List<DevicePC> list_pc = MainInvSysContainer.Get_Main_Device_List().Get_PCList();
 
-            int list_size = list.Count;
+            int list_size_pc = list_pc.Count;
+            int i;
 
-            for (int i = 0; i < list_size; i++)
+            for (i = 0; i < list_size_pc; i++)
             {
                 dataGridView_List.Rows.Add();
 
                 dataGridView_List.Rows[i].Cells[0].Value = i+1;
-                dataGridView_List.Rows[i].Cells[1].Value = list[i].ID;
-                dataGridView_List.Rows[i].Cells[2].Value = list[i].Name;
-                dataGridView_List.Rows[i].Cells[3].Value = list[i].Type;
-                dataGridView_List.Rows[i].Cells[4].Value = list[i].RegistrationDate;
+                dataGridView_List.Rows[i].Cells[1].Value = list_pc[i].ID;
+                dataGridView_List.Rows[i].Cells[2].Value = list_pc[i].Name;
+                dataGridView_List.Rows[i].Cells[3].Value = list_pc[i].Type;
+                dataGridView_List.Rows[i].Cells[4].Value = list_pc[i].RegistrationDate;
+            }
+
+            List<DeviceMonitor> list_mon = MainInvSysContainer.Get_Main_Device_List().Get_MonList();
+
+            int list_size_mon = list_mon.Count;
+
+
+            int j = 0;
+            for (i = list_size_pc; i < list_size_pc + list_size_mon; i++)
+            {
+                 dataGridView_List.Rows.Add();
+
+                dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                dataGridView_List.Rows[i].Cells[1].Value = list_mon[j].ID;
+                dataGridView_List.Rows[i].Cells[2].Value = list_mon[j].Name;
+                dataGridView_List.Rows[i].Cells[3].Value = list_mon[j].Type;
+                dataGridView_List.Rows[i].Cells[4].Value = list_mon[j].RegistrationDate;
+                j++;
             }
         }
 
 
         private void button_Add_Section_Click(object sender, EventArgs e)
         {
-            Form_Add_Device FABS = new Form_Add_Device();
+            Form_Add_Device FAD = new Form_Add_Device();
 
-            MainInvSysController.Add_Device(FABS, ref MainInvSysContainer);
+            MainInvSysController.Add_Device(FAD, ref MainInvSysContainer);
 
             Set_dataGridView_List();
         }
@@ -89,22 +108,40 @@ namespace InventorySystem
         {
             if(textBox_Input_To_Find.TextLength != 0)
             {
-                List<DevicePC> Found_List = new List<DevicePC>();
-                Found_List = MainInvSysController.Find_PC(MainInvSysContainer, textBox_Input_To_Find.Text);
+                List<DevicePC> Found_List_PC = new List<DevicePC>();
+                Found_List_PC = MainInvSysController.Find_PC(MainInvSysContainer, textBox_Input_To_Find.Text);
 
                 dataGridView_List.Rows.Clear();
 
-                int list_size = Found_List.Count;
+                int list_size_pc = Found_List_PC.Count;
 
-                for (int i = 0; i < list_size; i++)
+                for (int i = 0; i < list_size_pc; i++)
                 {
                     dataGridView_List.Rows.Add();
 
                     dataGridView_List.Rows[i].Cells[0].Value = i + 1;
-                    dataGridView_List.Rows[i].Cells[1].Value = Found_List[i].ID;
-                    dataGridView_List.Rows[i].Cells[2].Value = Found_List[i].Name;
-                    dataGridView_List.Rows[i].Cells[3].Value = Found_List[i].Type;
-                    dataGridView_List.Rows[i].Cells[4].Value = Found_List[i].RegistrationDate;
+                    dataGridView_List.Rows[i].Cells[1].Value = Found_List_PC[i].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = Found_List_PC[i].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = Found_List_PC[i].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = Found_List_PC[i].RegistrationDate;
+                }
+
+                List<DeviceMonitor> Found_List_Mon = new List<DeviceMonitor>();
+                Found_List_Mon = MainInvSysController.Find_Monitor(MainInvSysContainer, textBox_Input_To_Find.Text);
+
+                int list_size_mon = Found_List_Mon.Count;
+
+                int j = 0;
+                for (int i = list_size_pc; i < list_size_pc + list_size_mon; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = Found_List_Mon[j].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = Found_List_Mon[j].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = Found_List_Mon[j].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = Found_List_Mon[j].RegistrationDate;
+                    j++;
                 }
             }
 
@@ -117,118 +154,95 @@ namespace InventorySystem
         {
             if (dataGridView_List.SelectedRows.Count > 0)
             {
-                Form_Edit_Device FED = new Form_Edit_Device();
-
                 var selected = dataGridView_List.SelectedCells;
                 string id = Convert.ToString(selected[1].Value);
+                string type = Convert.ToString(selected[3].Value);
 
-                DevicePC device = MainInvSysContainer.Get_PC(id);
+                if (type == "PC")
+                {
+                    Form_Edit_PC FED = new Form_Edit_PC();
 
-                FED.richTextBox_ID.Text = device.ID;
-                FED.richTextBox_Type.Text = device.Type;
-                FED.richTextBox_Name.Text = device.Name;
-                FED.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
-                FED.richTextBox_Case.Text = device.Case;
-                FED.richTextBox_PowerSupply.Text = device.PowerSupply;
-                FED.richTextBox_Motherboard.Text = device.Moterboard;
-                FED.richTextBox_CPU.Text = device.CPU;
-                FED.richTextBox_RAM.Text = device.RAM;
-                FED.richTextBox_Drive.Text = device.Drive;
-                FED.richTextBox_GraphicsCard.Text = device.GraphicsCard;
-                FED.StartPosition = FormStartPosition.CenterScreen;
+                    DevicePC device = MainInvSysContainer.Get_PC(id);
 
-                FED.button_Add.Enabled = false;
-                FED.button_Add.Visible = false;
-                FED.button_Cancel.Enabled = false;
-                FED.button_Cancel.Visible = false;
+                    FED.richTextBox_ID.Text = device.ID;
+                    FED.richTextBox_Type.Text = "PC";
+                    FED.richTextBox_Name.Text = device.Name;
+                    FED.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
+                    FED.richTextBox_Case.Text = device.Case;
+                    FED.richTextBox_PowerSupply.Text = device.PowerSupply;
+                    FED.richTextBox_Motherboard.Text = device.Moterboard;
+                    FED.richTextBox_CPU.Text = device.CPU;
+                    FED.richTextBox_RAM.Text = device.RAM;
+                    FED.richTextBox_Drive.Text = device.Drive;
+                    FED.richTextBox_GraphicsCard.Text = device.GraphicsCard;
 
-                FED.Show();
+                    FED.richTextBox_ID.ReadOnly = true;
+                    FED.richTextBox_Type.ReadOnly = true;
+                    FED.richTextBox_Name.ReadOnly = true;
+                    FED.richTextBox_RegDate.ReadOnly = true;
+                    FED.richTextBox_Case.ReadOnly = true;
+                    FED.richTextBox_PowerSupply.ReadOnly = true;
+                    FED.richTextBox_Motherboard.ReadOnly = true;
+                    FED.richTextBox_CPU.ReadOnly = true;
+                    FED.richTextBox_RAM.ReadOnly = true;
+                    FED.richTextBox_Drive.ReadOnly = true;
+                    FED.richTextBox_GraphicsCard.ReadOnly = true;
+
+                    FED.StartPosition = FormStartPosition.CenterScreen;
+
+                    FED.button_Add.Enabled = false;
+                    FED.button_Add.Visible = false;
+                    FED.button_Cancel.Enabled = false;
+                    FED.button_Cancel.Visible = false;
+
+                    FED.Show();
+                }
+
+                else if(type == "Monitor")
+                {
+                    Form_Edit_Monitor FEM = new Form_Edit_Monitor();
+
+                    DeviceMonitor device = MainInvSysContainer.Get_Monitor(id);
+
+                    FEM.richTextBox_ID.Text = device.ID;
+                    FEM.richTextBox_Type.Text = "Monitor";
+                    FEM.richTextBox_Name.Text = device.Name;
+                    FEM.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
+                    FEM.richTextBox_Connector.Text = device.Connector;
+                    FEM.richTextBox_Diagonal.Text = device.Diagonal;
+                    FEM.richTextBox_Frequency.Text = device.Frequency;
+                    FEM.richTextBox_Resolution.Text = device.Resolution;
+
+                    FEM.richTextBox_ID.ReadOnly = true;
+                    FEM.richTextBox_Type.ReadOnly = true;
+                    FEM.richTextBox_Name.ReadOnly = true;
+                    FEM.richTextBox_RegDate.ReadOnly = true;
+                    FEM.richTextBox_Connector.ReadOnly = true;
+                    FEM.richTextBox_Diagonal.ReadOnly = true;
+                    FEM.richTextBox_Frequency.ReadOnly = true;
+                    FEM.richTextBox_Resolution.ReadOnly = true;
+
+                    FEM.StartPosition = FormStartPosition.CenterScreen;
+
+                    FEM.button_Add.Enabled = false;
+                    FEM.button_Add.Visible = false;
+                    FEM.button_Cancel.Enabled = false;
+                    FEM.button_Cancel.Visible = false;
+
+                    FEM.Show();
+                }
             }
         }
 
         private void button_ChangeInfo_Click(object sender, EventArgs e)
         {
-            Form_Edit_Device FED = new Form_Edit_Device();
-
             var selected = dataGridView_List.SelectedCells;
             string id = Convert.ToString(selected[1].Value);
+            string type = Convert.ToString(selected[3].Value);
 
-            MainInvSysController.Edit_Device(FED, ref MainInvSysContainer, id);
+            MainInvSysController.Edit_Device(ref MainInvSysContainer, id, type);
 
             Set_dataGridView_List();
         }
-
-
-        //public void Add_Book(string library_cipher, int number)
-        //{
-        //    MainLibraryController.Add_Book(ref MainLibraryContainer, library_cipher, number);
-
-        //    Set_dataGridView_Catalog();
-        //}
-
-
-        //public void Delete_Book(string library_cipher, int number)
-        //{
-        //    MainLibraryController.Delete_Book(ref MainLibraryContainer, library_cipher, number);
-
-        //    Set_dataGridView_Catalog();
-        //}
-
-
-        //public int Get_Amount_Of_Books(string library_cipher)
-        //{
-        //    return MainLibraryController.Get_Amount_Of_Books(ref MainLibraryContainer, library_cipher);
-        //}
-
-
-        //public int Get_Amount_Of_Available_Books(string library_cipher)
-        //{
-        //    return MainLibraryController.Get_Amount_Of_Available_Books(ref MainLibraryContainer, library_cipher);
-        //}
-
-
-        //public void Take_Book(string library_cipher, int number, string reader_name, int reader_number)
-        //{
-        //    MainLibraryController.Take_Book(ref MainLibraryContainer, library_cipher, number, reader_name, reader_number);
-
-        //    Set_dataGridView_Catalog();
-        //}
-
-
-        //public void Return_Book(string library_cipher, int number, string reader_name, int reader_number)
-        //{
-        //    MainLibraryController.Return_Book(ref MainLibraryContainer, library_cipher, number, reader_name, reader_number);
-
-        //    Set_dataGridView_Catalog();
-        //}
-
-
-        //private void button_Find_Info_Click(object sender, EventArgs e)
-        //{
-        //    List<Book> found_books = new List<Book>();
-
-        //    if (radioButton_Issued_Books.Checked)
-        //        found_books = MainLibraryController.Find_Books_By_Date(MainLibraryContainer, Convert.ToDateTime(dateTimePicker_First_Date.Text), Convert.ToDateTime(dateTimePicker_Second_Date.Text), true);
-
-        //    else if (radioButton_Returned_Books.Checked)
-        //        found_books = MainLibraryController.Find_Books_By_Date(MainLibraryContainer, Convert.ToDateTime(dateTimePicker_First_Date.Text), Convert.ToDateTime(dateTimePicker_Second_Date.Text), false);
-
-        //    dataGridView_Books_Info.Rows.Clear();
-
-        //    int list_size = found_books.Count;
-
-        //    for (int i = 0; i < list_size; i++)
-        //    {
-        //        dataGridView_Books_Info.Rows.Add();
-
-        //        dataGridView_Books_Info.Rows[i].Cells[0].Value = found_books[i].Title;
-        //        dataGridView_Books_Info.Rows[i].Cells[1].Value = found_books[i].Authors;
-        //        dataGridView_Books_Info.Rows[i].Cells[2].Value = found_books[i].Library_Cipher;
-        //        dataGridView_Books_Info.Rows[i].Cells[3].Value = found_books[i].Number;
-        //        dataGridView_Books_Info.Rows[i].Cells[4].Value = found_books[i].Publishing_Year;
-        //        dataGridView_Books_Info.Rows[i].Cells[5].Value = found_books[i].Publishing_Place;
-        //        dataGridView_Books_Info.Rows[i].Cells[6].Value = found_books[i].Publisher_Name;
-        //    }
-        //}
     }
 }

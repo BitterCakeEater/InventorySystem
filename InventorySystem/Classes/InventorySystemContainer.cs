@@ -41,35 +41,52 @@ namespace InventorySystem.Classes
             return MainDeviceList.Get_PC(id);
         }
 
-  
-        public void Add_PC(string id, string type, string name, DateTime RegDate,
+        public DeviceMonitor Get_Monitor(string id)
+        {
+            return MainDeviceList.Get_Monitor(id);
+        }
+
+
+        public void Add_PC(string id, Types type, string name, DateTime RegDate,
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
         {
             MainDeviceList.Add_PC(id, type, name, RegDate, ca, ps, motherb, cpu, ram, drive, gc);
         }
 
-        
+        public void Add_Monitor(string id, Types type, string name, DateTime RegDate,
+                           string diag, string res, string freq, string conn)
+        {
+            MainDeviceList.Add_Monitor(id, type, name, RegDate, diag, res, freq, conn);
+        }
+
+
         public void Change_PC(string id, 
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
         {
             MainDeviceList.Change_PC(id, ca, ps, motherb, cpu, ram, drive, gc);
         }
 
-
-        public void Delete_PC(string id)
+        public void Change_Monitor(string id,
+                           string diag, string res, string freq, string conn)
         {
-            MainDeviceList.Delete_PC(id);
+            MainDeviceList.Change_Monitor(id, diag, res, freq, conn);
         }
 
 
-        public bool Find_PC(string id, string type, string name, DateTime RegDate)
+        public void Delete_Device(string id)
         {
-            return MainDeviceList.Find_PC(id, type, name, RegDate);
+            MainDeviceList.Delete_Device(id);
         }
 
-        public bool Find_PC_ID(string id)
+
+        public bool Find_Device(string id, string name, DateTime RegDate)
         {
-            return MainDeviceList.Find_PC_ID(id);
+            return MainDeviceList.Find_Device(id, name, RegDate);
+        }
+
+        public bool Find_Device_ID(string id)
+        {
+            return MainDeviceList.Find_Device_ID(id);
         }
     }
 }
