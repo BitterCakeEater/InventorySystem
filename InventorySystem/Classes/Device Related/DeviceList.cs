@@ -11,11 +11,13 @@ namespace InventorySystem.Classes.Device_Related
     {
         private List<DevicePC> PCList;
         private List<DeviceMonitor> MonList;
+        private List<DevicePrinter> PrList;
 
         public DeviceList()
         {
             PCList = new List<DevicePC>();
             MonList = new List<DeviceMonitor>();
+            PrList = new List<DevicePrinter>();
         }
 
         public List<DevicePC> Get_PCList()
@@ -28,6 +30,11 @@ namespace InventorySystem.Classes.Device_Related
             return MonList;
         }
 
+        public List<DevicePrinter> Get_PrList()
+        {
+            return PrList;
+        }
+
         public DevicePC Get_PC(string id)
         {
             return PCList[PCList.FindIndex(getinfo => getinfo.ID == id)];
@@ -36,6 +43,11 @@ namespace InventorySystem.Classes.Device_Related
         public DeviceMonitor Get_Monitor(string id)
         {
             return MonList[MonList.FindIndex(getinfo => getinfo.ID == id)];
+        }
+
+        public DevicePrinter Get_Printer(string id)//////stopPoint
+        {
+            return PrList[MonList.FindIndex(getinfo => getinfo.ID == id)];
         }
 
         public void Add_PC(string id, Types type, string name, DateTime RegDate,

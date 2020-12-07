@@ -12,21 +12,24 @@ namespace InventorySystem.Classes.Device_Related
         public string PrintTechnology { get; set; }
         public string PaperSize { get; set; }
         public string Colors { get; set; }
+        public bool Scanner { get; set; }
 
         public DevicePrinter(string id, Types type, string name, DateTime RegDate,
-                        string pt, string ps, string col) :
+                        string pt, string ps, string col, bool sc) :
                         base(id, type, name, RegDate)
         {
             PrintTechnology = pt;
             PaperSize = ps;
             Colors = col;
+            Scanner = sc;
         }
 
-        public void Rewrite(string pt, string ps, string col)
+        public void Rewrite(string pt, string ps, string col, bool sc)
         {
             this.PrintTechnology = pt;
             this.PaperSize = ps;
             this.Colors = col;
+            this.Scanner = sc;
         }
     }
 }
