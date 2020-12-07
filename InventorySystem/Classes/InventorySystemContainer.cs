@@ -46,6 +46,11 @@ namespace InventorySystem.Classes
             return MainDeviceList.Get_Monitor(id);
         }
 
+        public DevicePrinter Get_Printer(string id)
+        {
+            return MainDeviceList.Get_Printer(id);
+        }
+
 
         public void Add_PC(string id, Types type, string name, DateTime RegDate,
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
@@ -59,6 +64,12 @@ namespace InventorySystem.Classes
             MainDeviceList.Add_Monitor(id, type, name, RegDate, diag, res, freq, conn);
         }
 
+        public void Add_Printer(string id, Types type, string name, DateTime RegDate,
+                           string pt, string ps, string col, string sc)
+        {
+            MainDeviceList.Add_Printer(id, type, name, RegDate, pt, ps, col, sc);
+        }
+
 
         public void Change_PC(string id, 
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
@@ -70,6 +81,12 @@ namespace InventorySystem.Classes
                            string diag, string res, string freq, string conn)
         {
             MainDeviceList.Change_Monitor(id, diag, res, freq, conn);
+        }
+
+        public void Change_Printer(string id,
+                           string pt, string ps, string col, string sc)
+        {
+            MainDeviceList.Change_Printer(id, pt, ps, col, sc);
         }
 
 

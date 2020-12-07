@@ -58,11 +58,23 @@
     <Compile Include="Form_Add_Device.Designer.cs">
       <DependentUpon>Form_Add_Device.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_Add_Printer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Add_Printer.Designer.cs">
+      <DependentUpon>Form_Add_Printer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Add_Monitor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form_Add_Monitor.Designer.cs">
       <DependentUpon>Form_Add_Monitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Edit_Printer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Edit_Printer.Designer.cs">
+      <DependentUpon>Form_Edit_Printer.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Edit_Monitor.cs">
       <SubType>Form</SubType>
@@ -81,12 +93,6 @@
     </Compile>
     <Compile Include="Form_Add_PC.Designer.cs">
       <DependentUpon>Form_Add_PC.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_Card.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Card.Designer.cs">
-      <DependentUpon>Form_Card.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Delete_Attention.cs">
       <SubType>Form</SubType>
@@ -107,8 +113,14 @@
     <EmbeddedResource Include="Form_Add_Device.resx">
       <DependentUpon>Form_Add_Device.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form_Add_Printer.resx">
+      <DependentUpon>Form_Add_Printer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_Add_Monitor.resx">
       <DependentUpon>Form_Add_Monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Edit_Printer.resx">
+      <DependentUpon>Form_Edit_Printer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Edit_Monitor.resx">
       <DependentUpon>Form_Edit_Monitor.cs</DependentUpon>
@@ -118,12 +130,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Add_PC.resx">
       <DependentUpon>Form_Add_PC.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Card.ja.resx">
-      <DependentUpon>Form_Card.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Card.resx">
-      <DependentUpon>Form_Card.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Delete_Attention.resx">
       <DependentUpon>Form_Delete_Attention.cs</DependentUpon>

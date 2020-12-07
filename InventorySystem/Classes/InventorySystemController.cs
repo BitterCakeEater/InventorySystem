@@ -95,7 +95,44 @@ namespace InventorySystem.Classes
                                            FAM.richTextBox_Connector.Text);
 
                     }
-                }               
+                }
+                else if (FAD.radioButton_Printer.Checked)
+                {
+                    Form_Add_Printer FAP = new Form_Add_Printer();
+                    FAP.StartPosition = FormStartPosition.CenterParent;
+                    FAP.richTextBox_Type.ReadOnly = true;
+                    FAP.richTextBox_Type.Text = "Printer";
+                    FAP.ShowDialog();
+
+                    t = Types.Printer;
+
+                    if (InvSysContainer.Find_Device_ID(FAP.richTextBox_ID.Text))
+                    {
+                        while (InvSysContainer.Find_Device_ID(FAP.richTextBox_ID.Text))
+                        {
+                            MessageBox.Show(
+                            "Пристрій з таким ідентифікатором вже існує!",
+                            "Увага!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning,
+                            MessageBoxDefaultButton.Button1);
+
+                            FAP.ShowDialog();
+                        }
+                    }
+                    else
+                    {
+                        InvSysContainer.Add_Printer(FAP.richTextBox_ID.Text,
+                                           t,
+                                           FAP.richTextBox_Name.Text,
+                                           DateTime.Now,
+                                           FAP.richTextBox_PrintTech.Text,
+                                           FAP.richTextBox_PaperSize.Text,
+                                           FAP.richTextBox_Colors.Text,
+                                           FAP.richTextBox_Scanner.Text);
+
+                    }
+                }
             }
 
             InvSysContainer.Save_Main_Device_List();
@@ -178,7 +215,42 @@ namespace InventorySystem.Classes
 
                     InvSysContainer.Save_Main_Device_List();
                 }
-            }     
+            }
+
+            else if (type == "Printer")
+            {
+                Form_Edit_Printer FEP = new Form_Edit_Printer();
+
+                DevicePrinter device = InvSysContainer.Get_Printer(id);
+
+                FEP.richTextBox_ID.Text = device.ID;
+                FEP.richTextBox_Type.Text = "Monitor";
+                FEP.richTextBox_Name.Text = device.Name;
+                FEP.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
+                FEP.richTextBox_PrintTech.Text = device.PrintTechnology;
+                FEP.richTextBox_PaperSize.Text = device.PaperSize;
+                FEP.richTextBox_Colors.Text = device.Colors;
+                FEP.richTextBox_Scanner.Text = device.Scanner;
+                FEP.StartPosition = FormStartPosition.CenterScreen;
+
+                FEP.richTextBox_ID.ReadOnly = true;
+                FEP.richTextBox_Type.ReadOnly = true;
+                FEP.richTextBox_Name.ReadOnly = true;
+                FEP.richTextBox_RegDate.ReadOnly = true;
+
+                FEP.ShowDialog();
+
+                if (FEP.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    InvSysContainer.Change_Printer(id,
+                                                FEP.richTextBox_PrintTech.Text,
+                                                FEP.richTextBox_PaperSize.Text,
+                                                FEP.richTextBox_Colors.Text,
+                                                FEP.richTextBox_Scanner.Text);
+
+                    InvSysContainer.Save_Main_Device_List();
+                }
+            }
         }
 
 
@@ -223,6 +295,20 @@ namespace InventorySystem.Classes
                                                 Convert.ToString(getInfo.Name).Contains(str_to_find));
 
             rez = r.ToList<DeviceMonitor>();
+
+            return rez;
+        }
+
+        public List<DevicePrinter> Find_Printer(InventorySystemContainer InvSysContainer, string str_to_find)
+        {
+            List<DevicePrinter> rez = new List<DevicePrinter>();
+
+            IEnumerable<DevicePrinter> r = InvSysContainer.Get_Main_Device_List().
+                                            Get_PrList().Where(getInfo =>
+                                                Convert.ToString(getInfo.ID).Contains(str_to_find) ||
+                                                Convert.ToString(getInfo.Name).Contains(str_to_find));
+
+            rez = r.ToList<DevicePrinter>();
 
             return rez;
         }

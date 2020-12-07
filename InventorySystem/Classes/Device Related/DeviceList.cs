@@ -45,9 +45,9 @@ namespace InventorySystem.Classes.Device_Related
             return MonList[MonList.FindIndex(getinfo => getinfo.ID == id)];
         }
 
-        public DevicePrinter Get_Printer(string id)//////stopPoint
+        public DevicePrinter Get_Printer(string id)
         {
-            return PrList[MonList.FindIndex(getinfo => getinfo.ID == id)];
+            return PrList[PrList.FindIndex(getinfo => getinfo.ID == id)];
         }
 
         public void Add_PC(string id, Types type, string name, DateTime RegDate,
@@ -62,6 +62,12 @@ namespace InventorySystem.Classes.Device_Related
             MonList.Add(new DeviceMonitor(id, type, name, RegDate, diag, res, freq, conn));
         }
 
+        public void Add_Printer(string id, Types type, string name, DateTime RegDate,
+                           string pt, string ps, string col, string sc)
+        {
+            PrList.Add(new DevicePrinter(id, type, name, RegDate, pt, ps, col, sc));
+        }
+
         public void Change_PC(string id,
                            string ca, string ps, string motherb, string cpu, string ram, string drive, string gc)
         {
@@ -73,6 +79,13 @@ namespace InventorySystem.Classes.Device_Related
                            string diag, string res, string freq, string conn)
         {
             MonList.Find(getInfo => getInfo.ID == id).Rewrite(diag, res, freq, conn);
+
+        }
+
+        public void Change_Printer(string id,
+                           string pt, string ps, string col, string sc)
+        {
+            PrList.Find(getInfo => getInfo.ID == id).Rewrite(pt, ps, col, sc);
 
         }
 
@@ -90,6 +103,15 @@ namespace InventorySystem.Classes.Device_Related
             if (MonList.Count > 0)
             {
                 DeviceMonitor found2 = MonList.Find(getinfo => getinfo.ID == id &&
+                                                    getinfo.Name == name &&
+                                                    getinfo.RegistrationDate == RegDate);
+                if (found2 != null)
+                    return true;
+            }
+
+            if (PrList.Count > 0)
+            {
+                DevicePrinter found2 = PrList.Find(getinfo => getinfo.ID == id &&
                                                     getinfo.Name == name &&
                                                     getinfo.RegistrationDate == RegDate);
                 if (found2 != null)
@@ -115,6 +137,13 @@ namespace InventorySystem.Classes.Device_Related
                     return true;
             }
 
+            if (PrList.Count > 0)
+            {
+                DevicePrinter found2 = PrList.Find(getinfo => getinfo.ID == id);
+                if (found2 != null)
+                    return true;
+            }
+
             return false;
         }
 
@@ -133,7 +162,14 @@ namespace InventorySystem.Classes.Device_Related
             {
                 MonList.Remove(mon_to_remove);
                 return;
-            }     
+            }
+
+            DevicePrinter pr_to_remove = PrList.Find(getinfo => getinfo.ID == id);
+            if (pr_to_remove != null)
+            {
+                PrList.Remove(pr_to_remove);
+                return;
+            }
         }
     }
 }

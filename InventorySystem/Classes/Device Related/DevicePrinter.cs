@@ -12,10 +12,10 @@ namespace InventorySystem.Classes.Device_Related
         public string PrintTechnology { get; set; }
         public string PaperSize { get; set; }
         public string Colors { get; set; }
-        public bool Scanner { get; set; }
+        public string Scanner { get; set; }
 
         public DevicePrinter(string id, Types type, string name, DateTime RegDate,
-                        string pt, string ps, string col, bool sc) :
+                        string pt, string ps, string col, string sc) :
                         base(id, type, name, RegDate)
         {
             PrintTechnology = pt;
@@ -24,7 +24,7 @@ namespace InventorySystem.Classes.Device_Related
             Scanner = sc;
         }
 
-        public void Rewrite(string pt, string ps, string col, bool sc)
+        public void Rewrite(string pt, string ps, string col, string sc)
         {
             this.PrintTechnology = pt;
             this.PaperSize = ps;

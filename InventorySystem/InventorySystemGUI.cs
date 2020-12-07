@@ -64,7 +64,6 @@ namespace InventorySystem
 
             int list_size_mon = list_mon.Count;
 
-
             int j = 0;
             for (i = list_size_pc; i < list_size_pc + list_size_mon; i++)
             {
@@ -75,6 +74,23 @@ namespace InventorySystem
                 dataGridView_List.Rows[i].Cells[2].Value = list_mon[j].Name;
                 dataGridView_List.Rows[i].Cells[3].Value = list_mon[j].Type;
                 dataGridView_List.Rows[i].Cells[4].Value = list_mon[j].RegistrationDate;
+                j++;
+            }
+
+            List<DevicePrinter> list_pr = MainInvSysContainer.Get_Main_Device_List().Get_PrList();
+
+            int list_size_pr = list_pr.Count;
+
+            j = 0;
+            for (i = list_size_pc + list_size_mon; i < list_size_pc + list_size_mon + list_size_pr; i++)
+            {
+                dataGridView_List.Rows.Add();
+
+                dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                dataGridView_List.Rows[i].Cells[1].Value = list_pr[j].ID;
+                dataGridView_List.Rows[i].Cells[2].Value = list_pr[j].Name;
+                dataGridView_List.Rows[i].Cells[3].Value = list_pr[j].Type;
+                dataGridView_List.Rows[i].Cells[4].Value = list_pr[j].RegistrationDate;
                 j++;
             }
         }
@@ -141,6 +157,24 @@ namespace InventorySystem
                     dataGridView_List.Rows[i].Cells[2].Value = Found_List_Mon[j].Name;
                     dataGridView_List.Rows[i].Cells[3].Value = Found_List_Mon[j].Type;
                     dataGridView_List.Rows[i].Cells[4].Value = Found_List_Mon[j].RegistrationDate;
+                    j++;
+                }
+
+                List<DevicePrinter> Found_List_Pr = new List<DevicePrinter>();
+                Found_List_Pr = MainInvSysController.Find_Printer(MainInvSysContainer, textBox_Input_To_Find.Text);
+
+                int list_size_pr = Found_List_Pr.Count;
+
+                j = 0;
+                for (int i = list_size_pc + list_size_mon; i < list_size_pc + list_size_mon + list_size_pr; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = Found_List_Pr[j].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = Found_List_Pr[j].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = Found_List_Pr[j].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = Found_List_Pr[j].RegistrationDate;
                     j++;
                 }
             }
@@ -230,6 +264,40 @@ namespace InventorySystem
                     FEM.button_Cancel.Visible = false;
 
                     FEM.Show();
+                }
+
+                else if (type == "Printer")
+                {
+                    Form_Edit_Printer FEP = new Form_Edit_Printer();
+
+                    DevicePrinter device = MainInvSysContainer.Get_Printer(id);
+
+                    FEP.richTextBox_ID.Text = device.ID;
+                    FEP.richTextBox_Type.Text = "Printer";
+                    FEP.richTextBox_Name.Text = device.Name;
+                    FEP.richTextBox_RegDate.Text = Convert.ToString(device.RegistrationDate);
+                    FEP.richTextBox_PrintTech.Text = device.PrintTechnology;
+                    FEP.richTextBox_PaperSize.Text = device.PaperSize;
+                    FEP.richTextBox_Colors.Text = device.Colors;
+                    FEP.richTextBox_Scanner.Text = device.Scanner;
+
+                    FEP.richTextBox_ID.ReadOnly = true;
+                    FEP.richTextBox_Type.ReadOnly = true;
+                    FEP.richTextBox_Name.ReadOnly = true;
+                    FEP.richTextBox_RegDate.ReadOnly = true;
+                    FEP.richTextBox_PrintTech.ReadOnly = true;
+                    FEP.richTextBox_PaperSize.ReadOnly = true;
+                    FEP.richTextBox_Colors.ReadOnly = true;
+                    FEP.richTextBox_Scanner.ReadOnly = true;
+
+                    FEP.StartPosition = FormStartPosition.CenterScreen;
+
+                    FEP.button_Add.Enabled = false;
+                    FEP.button_Add.Visible = false;
+                    FEP.button_Cancel.Enabled = false;
+                    FEP.button_Cancel.Visible = false;
+
+                    FEP.Show();
                 }
             }
         }
