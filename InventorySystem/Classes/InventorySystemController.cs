@@ -43,7 +43,7 @@ namespace InventorySystem.Classes
                             FAP.ShowDialog();
                         }
                     }
-                    else
+                    else if(FAP.DialogResult != DialogResult.Cancel)
                     {
                         InvSysContainer.Add_PC(FAP.richTextBox_ID.Text,
                                            t,
@@ -83,7 +83,7 @@ namespace InventorySystem.Classes
                             FAM.ShowDialog();
                         }
                     }
-                    else
+                    else if (FAM.DialogResult != DialogResult.Cancel)
                     {
                         InvSysContainer.Add_Monitor(FAM.richTextBox_ID.Text,
                                            t,
@@ -120,7 +120,7 @@ namespace InventorySystem.Classes
                             FAP.ShowDialog();
                         }
                     }
-                    else
+                    else if (FAP.DialogResult != DialogResult.Cancel)
                     {
                         InvSysContainer.Add_Printer(FAP.richTextBox_ID.Text,
                                            t,

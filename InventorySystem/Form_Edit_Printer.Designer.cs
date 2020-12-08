@@ -211,9 +211,9 @@
             this.label5.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(12, 208);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 19);
+            this.label5.Size = new System.Drawing.Size(128, 19);
             this.label5.TabIndex = 26;
-            this.label5.Text = "Формат бумаги:";
+            this.label5.Text = "Формат аркушу:";
             // 
             // label4
             // 
