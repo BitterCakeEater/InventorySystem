@@ -39,7 +39,7 @@ namespace InventorySystem
             BufferDate = DateTime.MinValue;
 
             if (LogIn())
-                LoadData();
+                Load_Data();
 
             else
                 Close();
@@ -56,13 +56,13 @@ namespace InventorySystem
                     return true;
 
                 else
-                    return Wrong();
+                    return Wrong_Info();
             }
             else
                 return false;
         }
 
-        public bool Wrong()
+        public bool Wrong_Info()
         {
             Form_LogIn FLI = new Form_LogIn();
             FLI.StartPosition = FormStartPosition.CenterParent;
@@ -74,13 +74,13 @@ namespace InventorySystem
                     return true;
 
                 else
-                    return Wrong();
+                    return Wrong_Info();
             }
             else
                 return false;
         }
 
-        public void LoadData()
+        public void Load_Data()
         {
             Loaded = FileSystem.Load_Container_List(ref MainInvSysContainers);
             if (!Loaded)
@@ -618,6 +618,8 @@ namespace InventorySystem
 
         private void button_Load_Click(object sender, EventArgs e)
         {
+            DateTime bufferTime = Convert.ToDateTime(comboBox_Dates.SelectedItem);
+
             if (!Saved)
             {
                 Form_Save_Attention FSA = new Form_Save_Attention();
@@ -641,7 +643,8 @@ namespace InventorySystem
                 BufferDate = DateTime.MinValue;
             }
 
-            ChosenDate = Convert.ToDateTime(comboBox_Dates.SelectedItem);
+            ChosenDate = bufferTime;
+            comboBox_Dates.SelectedItem = bufferTime;
 
             Set_dataGridView_List();
         }
