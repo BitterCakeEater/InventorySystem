@@ -14,25 +14,91 @@ namespace InventorySystem
 {
     partial class LibraryGUI : Form
     {
-        private InventorySystemContainer MainInvSysContainer;
+        private DateTime ChosenDate;
+        private DateTime BufferDate;
+        private List<DateTime> Dates;
+
+        InventorySystemContainer BufferContainer;
+
+        private bool Loaded = false;
+        private bool Saved = true;
+
+        private List<InventorySystemContainer> MainInvSysContainers;
         private InventorySystemController MainInvSysController;
 
         public LibraryGUI()
         {
-            MainInvSysContainer = new InventorySystemContainer();
+            MainInvSysContainers = new List<InventorySystemContainer>();
             MainInvSysController = new InventorySystemController();
+            Dates = new List<DateTime>();
             InitializeComponent();
 
-            MainInvSysContainer.Load_Main_Device_List();
+            BufferDate = DateTime.MinValue;
 
-            Set_dataGridView_List();
+            Loaded = FileSystem.Load_Container_List(ref MainInvSysContainers);
+            if (!Loaded)
+            {
+                BufferDate = DateTime.Now;
+
+                BufferContainer = new InventorySystemContainer(BufferDate);
+
+                Saved = false;             
+            }
+
+            Loaded = true;
+
+            Create_Dates_List();
+
+            if(Saved != false)
+                Set_dataGridView_List();
         }
 
-        public InventorySystemContainer Get_MainInvSysContainer()
+        public void Create_Dates_List()
         {
-            return MainInvSysContainer;
+            Dates.Clear();
+            comboBox_Dates.Items.Clear();
+
+            if (MainInvSysContainers.Count != 0)
+            {
+                foreach (var elem in MainInvSysContainers)
+                {
+                    Dates.Add(elem.CreationDate);
+                }
+
+                Dates.Sort();                
+
+                foreach (var date in Dates)
+                {
+                    comboBox_Dates.Items.Add(date);
+                }
+
+                comboBox_Dates.SelectedIndex = Dates.Count - 1;
+
+                ChosenDate = Dates[Dates.Count - 1];
+            }
+            else
+            {
+                Dates.Add(BufferDate);
+
+                comboBox_Dates.Items.Add(BufferDate);
+
+                comboBox_Dates.SelectedIndex = Dates.Count - 1;
+
+                ChosenDate = Dates[Dates.Count - 1];
+            }
         }
 
+        public InventorySystemContainer Get_MainInvSysContainer(DateTime date)
+        {
+            return MainInvSysContainers[MainInvSysContainers.FindIndex(getInfo => getInfo.CreationDate.Date == date.Date && getInfo.CreationDate.Hour == date.Hour &&
+                                       getInfo.CreationDate.Minute == date.Minute && getInfo.CreationDate.Second == date.Second)];
+        }
+
+        public void Set_MainInvSysContainer(InventorySystemContainer ISC, DateTime date)
+        {
+            MainInvSysContainers[MainInvSysContainers.FindIndex(getInfo => getInfo.CreationDate.Date == date.Date && getInfo.CreationDate.Hour == date.Hour &&
+                                       getInfo.CreationDate.Minute == date.Minute && getInfo.CreationDate.Second == date.Second)] = ISC;
+        }
 
         public  InventorySystemController Get_MainInvSysController()
         {
@@ -44,54 +110,116 @@ namespace InventorySystem
         {
             dataGridView_List.Rows.Clear();
 
-            List<DevicePC> list_pc = MainInvSysContainer.Get_Main_Device_List().Get_PCList();
-
-            int list_size_pc = list_pc.Count;
-            int i;
-
-            for (i = 0; i < list_size_pc; i++)
+            if (Loaded)
             {
-                dataGridView_List.Rows.Add();
+                List<DevicePC> list_pc = Get_MainInvSysContainer(ChosenDate).Get_Main_Device_List().Get_PCList();
 
-                dataGridView_List.Rows[i].Cells[0].Value = i+1;
-                dataGridView_List.Rows[i].Cells[1].Value = list_pc[i].ID;
-                dataGridView_List.Rows[i].Cells[2].Value = list_pc[i].Name;
-                dataGridView_List.Rows[i].Cells[3].Value = list_pc[i].Type;
-                dataGridView_List.Rows[i].Cells[4].Value = list_pc[i].RegistrationDate;
+                int list_size_pc = list_pc.Count;
+                int i;
+
+                for (i = 0; i < list_size_pc; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = list_pc[i].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = list_pc[i].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = list_pc[i].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = list_pc[i].RegistrationDate;
+                }
+
+                List<DeviceMonitor> list_mon = Get_MainInvSysContainer(ChosenDate).Get_Main_Device_List().Get_MonList();
+
+                int list_size_mon = list_mon.Count;
+
+                int j = 0;
+                for (i = list_size_pc; i < list_size_pc + list_size_mon; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = list_mon[j].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = list_mon[j].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = list_mon[j].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = list_mon[j].RegistrationDate;
+                    j++;
+                }
+
+                List<DevicePrinter> list_pr = Get_MainInvSysContainer(ChosenDate).Get_Main_Device_List().Get_PrList();
+
+                int list_size_pr = list_pr.Count;
+
+                j = 0;
+                for (i = list_size_pc + list_size_mon; i < list_size_pc + list_size_mon + list_size_pr; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = list_pr[j].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = list_pr[j].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = list_pr[j].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = list_pr[j].RegistrationDate;
+                    j++;
+                }
             }
+        }
 
-            List<DeviceMonitor> list_mon = MainInvSysContainer.Get_Main_Device_List().Get_MonList();
 
-            int list_size_mon = list_mon.Count;
+        public void Set_dataGridView_List(InventorySystemContainer ISC)
+        {
+            dataGridView_List.Rows.Clear();
 
-            int j = 0;
-            for (i = list_size_pc; i < list_size_pc + list_size_mon; i++)
+            if (Loaded)
             {
-                 dataGridView_List.Rows.Add();
+                List<DevicePC> list_pc = ISC.Get_Main_Device_List().Get_PCList();
 
-                dataGridView_List.Rows[i].Cells[0].Value = i + 1;
-                dataGridView_List.Rows[i].Cells[1].Value = list_mon[j].ID;
-                dataGridView_List.Rows[i].Cells[2].Value = list_mon[j].Name;
-                dataGridView_List.Rows[i].Cells[3].Value = list_mon[j].Type;
-                dataGridView_List.Rows[i].Cells[4].Value = list_mon[j].RegistrationDate;
-                j++;
-            }
+                int list_size_pc = list_pc.Count;
+                int i;
 
-            List<DevicePrinter> list_pr = MainInvSysContainer.Get_Main_Device_List().Get_PrList();
+                for (i = 0; i < list_size_pc; i++)
+                {
+                    dataGridView_List.Rows.Add();
 
-            int list_size_pr = list_pr.Count;
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = list_pc[i].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = list_pc[i].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = list_pc[i].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = list_pc[i].RegistrationDate;
+                }
 
-            j = 0;
-            for (i = list_size_pc + list_size_mon; i < list_size_pc + list_size_mon + list_size_pr; i++)
-            {
-                dataGridView_List.Rows.Add();
+                List<DeviceMonitor> list_mon = ISC.Get_Main_Device_List().Get_MonList();
 
-                dataGridView_List.Rows[i].Cells[0].Value = i + 1;
-                dataGridView_List.Rows[i].Cells[1].Value = list_pr[j].ID;
-                dataGridView_List.Rows[i].Cells[2].Value = list_pr[j].Name;
-                dataGridView_List.Rows[i].Cells[3].Value = list_pr[j].Type;
-                dataGridView_List.Rows[i].Cells[4].Value = list_pr[j].RegistrationDate;
-                j++;
+                int list_size_mon = list_mon.Count;
+
+                int j = 0;
+                for (i = list_size_pc; i < list_size_pc + list_size_mon; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = list_mon[j].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = list_mon[j].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = list_mon[j].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = list_mon[j].RegistrationDate;
+                    j++;
+                }
+
+                List<DevicePrinter> list_pr = ISC.Get_Main_Device_List().Get_PrList();
+
+                int list_size_pr = list_pr.Count;
+
+                j = 0;
+                for (i = list_size_pc + list_size_mon; i < list_size_pc + list_size_mon + list_size_pr; i++)
+                {
+                    dataGridView_List.Rows.Add();
+
+                    dataGridView_List.Rows[i].Cells[0].Value = i + 1;
+                    dataGridView_List.Rows[i].Cells[1].Value = list_pr[j].ID;
+                    dataGridView_List.Rows[i].Cells[2].Value = list_pr[j].Name;
+                    dataGridView_List.Rows[i].Cells[3].Value = list_pr[j].Type;
+                    dataGridView_List.Rows[i].Cells[4].Value = list_pr[j].RegistrationDate;
+                    j++;
+                }
             }
         }
 
@@ -100,9 +228,27 @@ namespace InventorySystem
         {
             Form_Add_Device FAD = new Form_Add_Device();
 
-            MainInvSysController.Add_Device(FAD, ref MainInvSysContainer);
+            if (BufferContainer == null)
+            {
+                BufferContainer = new InventorySystemContainer(ChosenDate);
+                BufferContainer = (InventorySystemContainer)Get_MainInvSysContainer(ChosenDate).Clone();
+            }
 
-            Set_dataGridView_List();
+            if (MainInvSysController.Add_Device(FAD, ref BufferContainer))
+            {
+
+                if (BufferDate == DateTime.MinValue)
+                {
+                    BufferDate = DateTime.Now;
+                    BufferContainer.CreationDate = BufferDate;
+                }
+
+                Saved = false;
+
+                //Set_MainInvSysContainer(ISC, ChosenDate);
+
+                Set_dataGridView_List(BufferContainer);
+            }
         }
 
 
@@ -113,9 +259,26 @@ namespace InventorySystem
                 var selected = dataGridView_List.SelectedCells;
                 string id = Convert.ToString(selected[1].Value);
 
-                MainInvSysController.Delete_Device(ref MainInvSysContainer, id);
+                if (BufferContainer == null)
+                {
+                    BufferContainer = new InventorySystemContainer(ChosenDate);
+                    BufferContainer = (InventorySystemContainer)Get_MainInvSysContainer(ChosenDate).Clone();
+                }
 
-                Set_dataGridView_List();
+                if (MainInvSysController.Delete_Device(ref BufferContainer, id))
+                {
+                    if (BufferDate == DateTime.MinValue)
+                    {
+                        BufferDate = DateTime.Now;
+                        BufferContainer.CreationDate = BufferDate;
+                    }
+
+                    Saved = false;
+
+                    //Set_MainInvSysContainer(ISC, ChosenDate);
+
+                    Set_dataGridView_List(BufferContainer);
+                }
             }
         }
 
@@ -125,7 +288,10 @@ namespace InventorySystem
             if(textBox_Input_To_Find.TextLength != 0)
             {
                 List<DevicePC> Found_List_PC = new List<DevicePC>();
-                Found_List_PC = MainInvSysController.Find_PC(MainInvSysContainer, textBox_Input_To_Find.Text);
+                if(Saved)
+                    Found_List_PC = MainInvSysController.Find_PC(Get_MainInvSysContainer(ChosenDate), textBox_Input_To_Find.Text);
+                else
+                    Found_List_PC = MainInvSysController.Find_PC(BufferContainer, textBox_Input_To_Find.Text);
 
                 dataGridView_List.Rows.Clear();
 
@@ -143,7 +309,10 @@ namespace InventorySystem
                 }
 
                 List<DeviceMonitor> Found_List_Mon = new List<DeviceMonitor>();
-                Found_List_Mon = MainInvSysController.Find_Monitor(MainInvSysContainer, textBox_Input_To_Find.Text);
+                if (Saved)
+                    Found_List_Mon = MainInvSysController.Find_Monitor(Get_MainInvSysContainer(ChosenDate), textBox_Input_To_Find.Text);
+                else
+                    Found_List_Mon = MainInvSysController.Find_Monitor(BufferContainer, textBox_Input_To_Find.Text);
 
                 int list_size_mon = Found_List_Mon.Count;
 
@@ -161,7 +330,10 @@ namespace InventorySystem
                 }
 
                 List<DevicePrinter> Found_List_Pr = new List<DevicePrinter>();
-                Found_List_Pr = MainInvSysController.Find_Printer(MainInvSysContainer, textBox_Input_To_Find.Text);
+                if (Saved)
+                    Found_List_Pr = MainInvSysController.Find_Printer(Get_MainInvSysContainer(ChosenDate), textBox_Input_To_Find.Text);
+                else
+                    Found_List_Pr = MainInvSysController.Find_Printer(BufferContainer, textBox_Input_To_Find.Text);
 
                 int list_size_pr = Found_List_Pr.Count;
 
@@ -180,7 +352,12 @@ namespace InventorySystem
             }
 
             else
-                Set_dataGridView_List();
+            {
+                if (Saved)
+                    Set_dataGridView_List();
+                else
+                    Set_dataGridView_List(BufferContainer);
+            }              
         }
 
 
@@ -195,8 +372,12 @@ namespace InventorySystem
                 if (type == "PC")
                 {
                     Form_Edit_PC FED = new Form_Edit_PC();
+                    DevicePC device;
 
-                    DevicePC device = MainInvSysContainer.Get_PC(id);
+                    if (Saved)
+                        device = Get_MainInvSysContainer(ChosenDate).Get_PC(id);
+                    else
+                        device = BufferContainer.Get_PC(id);
 
                     FED.richTextBox_ID.Text = device.ID;
                     FED.richTextBox_Type.Text = "PC";
@@ -236,7 +417,12 @@ namespace InventorySystem
                 {
                     Form_Edit_Monitor FEM = new Form_Edit_Monitor();
 
-                    DeviceMonitor device = MainInvSysContainer.Get_Monitor(id);
+                    DeviceMonitor device;
+
+                    if(Saved)
+                        device = Get_MainInvSysContainer(ChosenDate).Get_Monitor(id);
+                    else
+                        device = BufferContainer.Get_Monitor(id);
 
                     FEM.richTextBox_ID.Text = device.ID;
                     FEM.richTextBox_Type.Text = "Monitor";
@@ -270,7 +456,12 @@ namespace InventorySystem
                 {
                     Form_Edit_Printer FEP = new Form_Edit_Printer();
 
-                    DevicePrinter device = MainInvSysContainer.Get_Printer(id);
+                    DevicePrinter device;
+
+                    if(Saved)
+                        device = Get_MainInvSysContainer(ChosenDate).Get_Printer(id);
+                    else
+                        device = BufferContainer.Get_Printer(id);
 
                     FEP.richTextBox_ID.Text = device.ID;
                     FEP.richTextBox_Type.Text = "Printer";
@@ -308,9 +499,91 @@ namespace InventorySystem
             string id = Convert.ToString(selected[1].Value);
             string type = Convert.ToString(selected[3].Value);
 
-            MainInvSysController.Edit_Device(ref MainInvSysContainer, id, type);
+            if (BufferContainer == null)
+            {
+                BufferContainer = new InventorySystemContainer(ChosenDate);
+                BufferContainer = (InventorySystemContainer)Get_MainInvSysContainer(ChosenDate).Clone();
+            }
+
+            if (MainInvSysController.Edit_Device(ref BufferContainer, id, type))
+            {
+                if (BufferDate == DateTime.MinValue)
+                {
+                    BufferDate = DateTime.Now;
+                    BufferContainer.CreationDate = BufferDate;
+                }
+
+                Saved = false;
+                //Set_MainInvSysContainer(ISC, ChosenDate);
+
+                Set_dataGridView_List(BufferContainer);
+            }
+        }
+
+        private void button_Save_Click(object sender, EventArgs e)
+        {
+            if (!Saved)
+            {
+                MainInvSysContainers.Add(BufferContainer);
+
+                Saved = true;
+
+                BufferContainer = new InventorySystemContainer();
+                BufferContainer = null;
+                BufferDate = DateTime.MinValue;
+
+                FileSystem.Save_Container_List(MainInvSysContainers);
+
+                Create_Dates_List();
+                Set_dataGridView_List();
+            }           
+        }
+
+        private void button_Load_Click(object sender, EventArgs e)
+        {
+            if (!Saved)
+            {
+                Form_Save_Attention FSA = new Form_Save_Attention();
+                FSA.ShowDialog();
+                if (FSA.DialogResult == DialogResult.Yes)
+                    button_Save_Click(null, null);
+                else
+                {
+                    Saved = true;
+                    BufferContainer = new InventorySystemContainer();
+                    BufferContainer = null;
+                    BufferDate = DateTime.MinValue;
+                }
+            }
+
+            else if(Saved && BufferContainer != null)
+            {
+                BufferContainer = new InventorySystemContainer();
+                BufferContainer = null;
+                BufferDate = DateTime.MinValue;
+            }
+
+            ChosenDate = Convert.ToDateTime(comboBox_Dates.SelectedItem);
 
             Set_dataGridView_List();
+        }
+
+        private void InventorySystemGUI_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            if (!Saved)
+            {
+                Form_Save_Attention FSA = new Form_Save_Attention();
+                FSA.ShowDialog();
+                if (FSA.DialogResult == DialogResult.Yes)
+                    button_Save_Click(null, null);
+                else
+                {
+                    Saved = true;
+                    BufferContainer = new InventorySystemContainer();
+                    BufferContainer = null;
+                    BufferDate = DateTime.MinValue;
+                }
+            }
         }
     }
 }

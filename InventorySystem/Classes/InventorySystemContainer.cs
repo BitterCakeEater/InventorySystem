@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InventorySystem.Classes.Device_Related;
-using Library.Classes;
+using InventorySystem.Classes;
 
 namespace InventorySystem.Classes
 {
-    class InventorySystemContainer
+    [Serializable]
+    class InventorySystemContainer : ICloneable
     {
+        public DateTime CreationDate {get; set;}
         private DeviceList MainDeviceList;
 
         public InventorySystemContainer()
@@ -17,17 +19,28 @@ namespace InventorySystem.Classes
             MainDeviceList = new DeviceList();
         }
 
+        public InventorySystemContainer(DateTime DT)
+        {
+            MainDeviceList = new DeviceList();
+            CreationDate = DT;
+        }
+
+        public object Return_Copy()
+        {
+            return this.MemberwiseClone();
+        }
+
         //save/load
-        public bool Save_Main_Device_List()
-        {
-            return FileSystem.Save_Device_List(MainDeviceList);
-        }
+        //public bool Save_Main_Device_List()
+        //{
+        //    return FileSystem.Save_Device_List(MainDeviceList);
+        //}
 
 
-        public bool Load_Main_Device_List()
-        {
-            return FileSystem.Load_Device_List(ref MainDeviceList);
-        }
+        //public bool Load_Main_Device_List()
+        //{
+        //    return FileSystem.Load_Device_List(ref MainDeviceList);
+        //}
 
         //get
         public DeviceList Get_Main_Device_List()
@@ -104,6 +117,15 @@ namespace InventorySystem.Classes
         public bool Find_Device_ID(string id)
         {
             return MainDeviceList.Find_Device_ID(id);
+        }
+
+        public object Clone()
+        {
+            InventorySystemContainer ISC = new InventorySystemContainer(this.CreationDate);
+
+            ISC.MainDeviceList = (DeviceList)this.MainDeviceList.Clone();
+
+            return ISC;
         }
     }
 }

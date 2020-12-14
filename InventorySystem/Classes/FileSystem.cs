@@ -5,22 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using InventorySystem.Classes.Device_Related;
+using InventorySystem.Classes;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Library.Classes
+namespace InventorySystem
 {
     class FileSystem
     {
-        public static bool Save_Device_List(DeviceList DevList)
+        public static bool Save_Container_List(List<InventorySystemContainer> ContainerList)
         {
             BinaryFormatter BinF = new BinaryFormatter();
 
-            using (FileStream fstream = new FileStream("DeviceListData.dat", FileMode.OpenOrCreate))
+            using (FileStream fstream = new FileStream("ContainerListData.dat", FileMode.OpenOrCreate))
             {
                 try
                 {
-                    BinF.Serialize(fstream, DevList);
+                    BinF.Serialize(fstream, ContainerList);
                     fstream.Close();
                 }
 
@@ -41,17 +42,17 @@ namespace Library.Classes
         }
 
 
-        public static bool Load_Device_List(ref DeviceList DevList)
+        public static bool Load_Container_List(ref List<InventorySystemContainer> ContainerList)
         {
             BinaryFormatter BinF = new BinaryFormatter();
 
-            using (FileStream fstream = new FileStream("DeviceListData.dat", FileMode.OpenOrCreate))
+            using (FileStream fstream = new FileStream("ContainerListData.dat", FileMode.OpenOrCreate))
             {
-                if (File.Exists("DeviceListData.dat") && fstream.Length != 0)
+                if (File.Exists("ContainerListData.dat") && fstream.Length != 0)
                 {
                     try
                     {
-                        DevList = (DeviceList)BinF.Deserialize(fstream);
+                        ContainerList = (List<InventorySystemContainer>)BinF.Deserialize(fstream);
                         fstream.Close();
                     }
 

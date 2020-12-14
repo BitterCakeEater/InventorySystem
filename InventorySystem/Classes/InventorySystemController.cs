@@ -10,7 +10,7 @@ namespace InventorySystem.Classes
 {
     class InventorySystemController
     {
-        public void Add_Device(Form_Add_Device FAD, ref InventorySystemContainer InvSysContainer)
+        public bool Add_Device(Form_Add_Device FAD, ref InventorySystemContainer InvSysContainer)
         {
             FAD.StartPosition = FormStartPosition.CenterParent;
             FAD.ShowDialog();
@@ -56,7 +56,8 @@ namespace InventorySystem.Classes
                                            FAP.richTextBox_RAM.Text,
                                            FAP.richTextBox_Drive.Text,
                                            FAP.richTextBox_GraphicsCard.Text);
-                        
+
+                        return true;
                     }
                 }
                 else if (FAD.radioButton_Monitor.Checked)
@@ -94,6 +95,7 @@ namespace InventorySystem.Classes
                                            FAM.richTextBox_Frequency.Text,
                                            FAM.richTextBox_Connector.Text);
 
+                        return true;
                     }
                 }
                 else if (FAD.radioButton_Printer.Checked)
@@ -131,15 +133,17 @@ namespace InventorySystem.Classes
                                            FAP.richTextBox_Colors.Text,
                                            FAP.richTextBox_Scanner.Text);
 
+                        return true;
                     }
                 }
             }
 
-            InvSysContainer.Save_Main_Device_List();
+            return false;
+            //InvSysContainer.Save_Main_Device_List();
         }
 
 
-        public void Edit_Device(ref InventorySystemContainer InvSysContainer, string id, string type)
+        public bool Edit_Device(ref InventorySystemContainer InvSysContainer, string id, string type)
         {
             if (type == "PC")
             {
@@ -178,8 +182,11 @@ namespace InventorySystem.Classes
                                                 FEP.richTextBox_Drive.Text,
                                                 FEP.richTextBox_GraphicsCard.Text);
 
-                    InvSysContainer.Save_Main_Device_List();
+                    return true;
+                    //InvSysContainer.Save_Main_Device_List();
                 }
+
+                return false;
             } 
             
             else if(type == "Monitor")
@@ -208,13 +215,15 @@ namespace InventorySystem.Classes
                 if (FEM.DialogResult == System.Windows.Forms.DialogResult.OK)
                 {
                     InvSysContainer.Change_Monitor(id,
-                                                FEM.richTextBox_Connector.Text,
                                                 FEM.richTextBox_Diagonal.Text,
+                                                FEM.richTextBox_Resolution.Text,
                                                 FEM.richTextBox_Frequency.Text,
-                                                FEM.richTextBox_Resolution.Text);
+                                                FEM.richTextBox_Connector.Text);
 
-                    InvSysContainer.Save_Main_Device_List();
+                    return true;
+                    //InvSysContainer.Save_Main_Device_List();
                 }
+                return false;
             }
 
             else if (type == "Printer")
@@ -248,13 +257,16 @@ namespace InventorySystem.Classes
                                                 FEP.richTextBox_Colors.Text,
                                                 FEP.richTextBox_Scanner.Text);
 
-                    InvSysContainer.Save_Main_Device_List();
+                    return true;
+                    //InvSysContainer.Save_Main_Device_List();
                 }
+                return false;
             }
+            return false;
         }
 
 
-        public void Delete_Device(ref InventorySystemContainer InvSysContainer, string id)
+        public bool Delete_Device(ref InventorySystemContainer InvSysContainer, string id)
         {
             Form_Delete_Attention FDA = new Form_Delete_Attention();
 
@@ -266,8 +278,10 @@ namespace InventorySystem.Classes
             {
                 InvSysContainer.Delete_Device(id);
 
-                InvSysContainer.Save_Main_Device_List();
+                return true;
+                //InvSysContainer.Save_Main_Device_List();
             }
+            return false;
         }
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace InventorySystem.Classes.Device_Related
 {
     [Serializable]
-    class DeviceMonitor : Device
+    class DeviceMonitor : Device, ICloneable
     {
         public string Diagonal { get; set; }
         public string Resolution { get; set; }
@@ -30,6 +30,14 @@ namespace InventorySystem.Classes.Device_Related
             this.Resolution = res;
             this.Frequency = freq;
             this.Connector = conn;
+        }
+
+        public object Clone()
+        {
+            DeviceMonitor DM = new DeviceMonitor(this.ID, this.Type, this.Name, this.RegistrationDate,
+                                     this.Diagonal, this.Resolution, this.Frequency, this.Connector);
+
+            return DM;
         }
     }
 }

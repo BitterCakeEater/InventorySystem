@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace InventorySystem.Classes.Device_Related
 {
     [Serializable]
-    class DeviceList
+    class DeviceList : ICloneable
     {
         private List<DevicePC> PCList;
         private List<DeviceMonitor> MonList;
@@ -170,6 +170,40 @@ namespace InventorySystem.Classes.Device_Related
                 PrList.Remove(pr_to_remove);
                 return;
             }
+        }
+
+        public object Clone()
+        {
+            DeviceList DevList = new DeviceList();
+
+            List<DevicePC> CPCList = new List<DevicePC>();
+            List<DeviceMonitor> CMonList = new List<DeviceMonitor>();
+            List<DevicePrinter> CPrList = new List<DevicePrinter>();
+
+            foreach (var e in this.PCList)
+            {
+                //DevList.PCList.Add((DevicePC)e.Clone());
+                CPCList.Add((DevicePC)e.Clone());
+            }
+
+            foreach (var e in this.MonList)
+            {
+                //DevList.MonList.Add((DeviceMonitor)e.Clone());
+                CMonList.Add((DeviceMonitor)e.Clone());
+            }
+
+            foreach (var e in this.PrList)
+            {
+                //DevList.PrList.Add((DevicePrinter)e.Clone());
+                CPrList.Add((DevicePrinter)e.Clone());
+            }
+
+            //DeviceList DevList = new DeviceList();
+            DevList.MonList = CMonList;
+            DevList.PCList = CPCList;
+            DevList.PrList = CPrList;
+
+            return DevList;
         }
     }
 }

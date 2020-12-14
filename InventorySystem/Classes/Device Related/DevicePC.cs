@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace InventorySystem.Classes.Device_Related
 {
     [Serializable]
-    class DevicePC : Device
+    class DevicePC : Device, ICloneable
     {
         public string Case { get; set; }
         public string PowerSupply { get; set; }
@@ -39,6 +39,15 @@ namespace InventorySystem.Classes.Device_Related
             this.RAM = ram;
             this.Drive = drive;
             this.GraphicsCard = gc;
+        }
+
+        public object Clone()
+        {
+            DevicePC DP = new DevicePC(this.ID, this.Type, this.Name, this.RegistrationDate,
+                                     this.Case, this.PowerSupply, this.Moterboard, this.CPU,
+                                     this.RAM, this.Drive, this.GraphicsCard);
+
+            return DP;
         }
     }
 }

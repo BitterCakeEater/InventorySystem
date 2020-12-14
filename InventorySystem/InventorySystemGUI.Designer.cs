@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryGUI));
-            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage_Catalog = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button_Save = new System.Windows.Forms.Button();
+            this.button_Load = new System.Windows.Forms.Button();
+            this.comboBox_Dates = new System.Windows.Forms.ComboBox();
             this.button_ChangeInfo = new System.Windows.Forms.Button();
             this.button_Info = new System.Windows.Forms.Button();
             this.button_Find = new System.Windows.Forms.Button();
@@ -44,26 +47,18 @@
             this.Column_DeviceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_DeviceType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_RegistrationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabControl.SuspendLayout();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage_Catalog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_List)).BeginInit();
+            this.tabControl.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl
-            // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl.Controls.Add(this.tabPage_Catalog);
-            this.tabControl.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl.Location = new System.Drawing.Point(4, 6);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1044, 467);
-            this.tabControl.TabIndex = 0;
             // 
             // tabPage_Catalog
             // 
+            this.tabPage_Catalog.Controls.Add(this.label1);
+            this.tabPage_Catalog.Controls.Add(this.button_Save);
+            this.tabPage_Catalog.Controls.Add(this.button_Load);
+            this.tabPage_Catalog.Controls.Add(this.comboBox_Dates);
             this.tabPage_Catalog.Controls.Add(this.button_ChangeInfo);
             this.tabPage_Catalog.Controls.Add(this.button_Info);
             this.tabPage_Catalog.Controls.Add(this.button_Find);
@@ -80,12 +75,55 @@
             this.tabPage_Catalog.Text = "Каталог";
             this.tabPage_Catalog.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(571, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(122, 21);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Дата інвентаризації";
+            // 
+            // button_Save
+            // 
+            this.button_Save.BackColor = System.Drawing.Color.Snow;
+            this.button_Save.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_Save.Location = new System.Drawing.Point(284, 401);
+            this.button_Save.Name = "button_Save";
+            this.button_Save.Size = new System.Drawing.Size(129, 31);
+            this.button_Save.TabIndex = 12;
+            this.button_Save.Text = "Зберегти зміни";
+            this.button_Save.UseVisualStyleBackColor = false;
+            this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
+            // 
+            // button_Load
+            // 
+            this.button_Load.BackColor = System.Drawing.Color.Snow;
+            this.button_Load.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_Load.Location = new System.Drawing.Point(933, 5);
+            this.button_Load.Name = "button_Load";
+            this.button_Load.Size = new System.Drawing.Size(97, 31);
+            this.button_Load.TabIndex = 11;
+            this.button_Load.Text = "Завантажити";
+            this.button_Load.UseVisualStyleBackColor = false;
+            this.button_Load.Click += new System.EventHandler(this.button_Load_Click);
+            // 
+            // comboBox_Dates
+            // 
+            this.comboBox_Dates.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox_Dates.FormattingEnabled = true;
+            this.comboBox_Dates.Location = new System.Drawing.Point(699, 8);
+            this.comboBox_Dates.Name = "comboBox_Dates";
+            this.comboBox_Dates.Size = new System.Drawing.Size(228, 27);
+            this.comboBox_Dates.TabIndex = 10;
+            // 
             // button_ChangeInfo
             // 
             this.button_ChangeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_ChangeInfo.BackColor = System.Drawing.Color.Snow;
             this.button_ChangeInfo.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_ChangeInfo.Location = new System.Drawing.Point(182, 406);
+            this.button_ChangeInfo.Location = new System.Drawing.Point(732, 403);
             this.button_ChangeInfo.Name = "button_ChangeInfo";
             this.button_ChangeInfo.Size = new System.Drawing.Size(160, 29);
             this.button_ChangeInfo.TabIndex = 9;
@@ -98,7 +136,7 @@
             this.button_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_Info.BackColor = System.Drawing.Color.Snow;
             this.button_Info.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Info.Location = new System.Drawing.Point(6, 406);
+            this.button_Info.Location = new System.Drawing.Point(556, 403);
             this.button_Info.Name = "button_Info";
             this.button_Info.Size = new System.Drawing.Size(170, 29);
             this.button_Info.TabIndex = 8;
@@ -130,7 +168,7 @@
             this.button_Delete_Section.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_Delete_Section.BackColor = System.Drawing.Color.Snow;
             this.button_Delete_Section.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Delete_Section.Location = new System.Drawing.Point(348, 406);
+            this.button_Delete_Section.Location = new System.Drawing.Point(898, 403);
             this.button_Delete_Section.Name = "button_Delete_Section";
             this.button_Delete_Section.Size = new System.Drawing.Size(132, 29);
             this.button_Delete_Section.TabIndex = 4;
@@ -143,7 +181,7 @@
             this.button_Add_Section.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Add_Section.BackColor = System.Drawing.Color.Snow;
             this.button_Add_Section.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Add_Section.Location = new System.Drawing.Point(870, 409);
+            this.button_Add_Section.Location = new System.Drawing.Point(6, 403);
             this.button_Add_Section.Name = "button_Add_Section";
             this.button_Add_Section.Size = new System.Drawing.Size(160, 29);
             this.button_Add_Section.TabIndex = 2;
@@ -216,6 +254,19 @@
             this.Column_RegistrationDate.Name = "Column_RegistrationDate";
             this.Column_RegistrationDate.ReadOnly = true;
             // 
+            // tabControl
+            // 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Controls.Add(this.tabPage_Catalog);
+            this.tabControl.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tabControl.Location = new System.Drawing.Point(4, 6);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(1044, 467);
+            this.tabControl.TabIndex = 0;
+            // 
             // LibraryGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -226,31 +277,36 @@
             this.MinimumSize = new System.Drawing.Size(680, 320);
             this.Name = "LibraryGUI";
             this.Text = "INVEDIT";
-            this.tabControl.ResumeLayout(false);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventorySystemGUI_FormClosing);
             this.tabPage_Catalog.ResumeLayout(false);
             this.tabPage_Catalog.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_List)).EndInit();
+            this.tabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage_Catalog;
-        private System.Windows.Forms.DataGridView dataGridView_List;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button_Add_Section;
-        private System.Windows.Forms.Button button_Delete_Section;
+        private System.Windows.Forms.Button button_Save;
+        private System.Windows.Forms.Button button_Load;
+        private System.Windows.Forms.ComboBox comboBox_Dates;
+        private System.Windows.Forms.Button button_ChangeInfo;
+        private System.Windows.Forms.Button button_Info;
         private System.Windows.Forms.Button button_Find;
         private System.Windows.Forms.TextBox textBox_Input_To_Find;
-        private System.Windows.Forms.Button button_Info;
+        private System.Windows.Forms.Button button_Delete_Section;
+        private System.Windows.Forms.Button button_Add_Section;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dataGridView_List;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_OrderNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_DeviceName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_DeviceType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_RegistrationDate;
-        private System.Windows.Forms.Button button_ChangeInfo;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.Label label1;
     }
 }
 
