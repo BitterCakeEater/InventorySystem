@@ -527,18 +527,23 @@ namespace InventorySystem
         {
             if (!Saved)
             {
-                MainInvSysContainers.Add(BufferContainer);
+                if (BufferContainer.Get_Main_Device_List().Get_MonList().Count != 0 ||
+                    BufferContainer.Get_Main_Device_List().Get_PCList().Count != 0 ||
+                    BufferContainer.Get_Main_Device_List().Get_PrList().Count != 0)
+                {
+                    MainInvSysContainers.Add(BufferContainer);
 
-                Saved = true;
+                    Saved = true;
 
-                BufferContainer = new InventorySystemContainer();
-                BufferContainer = null;
-                BufferDate = DateTime.MinValue;
+                    BufferContainer = new InventorySystemContainer();
+                    BufferContainer = null;
+                    BufferDate = DateTime.MinValue;
 
-                FileSystem.Save_Container_List(MainInvSysContainers);
+                    FileSystem.Save_Container_List(MainInvSysContainers);
 
-                Create_Dates_List();
-                Set_dataGridView_List();
+                    Create_Dates_List();
+                    Set_dataGridView_List();
+                }
             }
             else if (Saved)
             {
