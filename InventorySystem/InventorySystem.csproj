@@ -70,6 +70,12 @@
     <Compile Include="Form_Add_Monitor.Designer.cs">
       <DependentUpon>Form_Add_Monitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_LogIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_LogIn.Designer.cs">
+      <DependentUpon>Form_LogIn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Save_Attention.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Add_Monitor.resx">
       <DependentUpon>Form_Add_Monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_LogIn.resx">
+      <DependentUpon>Form_LogIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Save_Attention.resx">
       <DependentUpon>Form_Save_Attention.cs</DependentUpon>

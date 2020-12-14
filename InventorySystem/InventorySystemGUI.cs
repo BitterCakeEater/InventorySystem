@@ -26,6 +26,9 @@ namespace InventorySystem
         private List<InventorySystemContainer> MainInvSysContainers;
         private InventorySystemController MainInvSysController;
 
+        private string Login = "admin";
+        private string Password = "admin";
+
         public LibraryGUI()
         {
             MainInvSysContainers = new List<InventorySystemContainer>();
@@ -35,6 +38,50 @@ namespace InventorySystem
 
             BufferDate = DateTime.MinValue;
 
+            if (LogIn())
+                LoadData();
+
+            else
+                Close();
+        }
+
+        public bool LogIn()
+        {
+            Form_LogIn FLI = new Form_LogIn();
+            FLI.StartPosition = FormStartPosition.CenterParent;
+            FLI.ShowDialog();
+            if(FLI.DialogResult == DialogResult.OK)
+            {
+                if(FLI.textBox_Login.Text == Login && FLI.textBox_Password.Text == Password)
+                    return true;
+
+                else
+                    return Wrong();
+            }
+            else
+                return false;
+        }
+
+        public bool Wrong()
+        {
+            Form_LogIn FLI = new Form_LogIn();
+            FLI.StartPosition = FormStartPosition.CenterParent;
+            FLI.textBox_Login.Text = "Невірний логін або пароль";
+            FLI.ShowDialog();
+            if (FLI.DialogResult == DialogResult.OK)
+            {
+                if (FLI.textBox_Login.Text == Login && FLI.textBox_Password.Text == Password)
+                    return true;
+
+                else
+                    return Wrong();
+            }
+            else
+                return false;
+        }
+
+        public void LoadData()
+        {
             Loaded = FileSystem.Load_Container_List(ref MainInvSysContainers);
             if (!Loaded)
             {
@@ -42,14 +89,14 @@ namespace InventorySystem
 
                 BufferContainer = new InventorySystemContainer(BufferDate);
 
-                Saved = false;             
+                Saved = false;
             }
 
             Loaded = true;
 
             Create_Dates_List();
 
-            if(Saved != false)
+            if (Saved != false)
                 Set_dataGridView_List();
         }
 
@@ -574,6 +621,7 @@ namespace InventorySystem
             if (!Saved)
             {
                 Form_Save_Attention FSA = new Form_Save_Attention();
+                FSA.StartPosition = FormStartPosition.CenterParent;
                 FSA.ShowDialog();
                 if (FSA.DialogResult == DialogResult.Yes)
                     button_Save_Click(null, null);
@@ -603,6 +651,7 @@ namespace InventorySystem
             if (!Saved)
             {
                 Form_Save_Attention FSA = new Form_Save_Attention();
+                FSA.StartPosition = FormStartPosition.CenterParent;
                 FSA.ShowDialog();
                 if (FSA.DialogResult == DialogResult.Yes)
                     button_Save_Click(null, null);
