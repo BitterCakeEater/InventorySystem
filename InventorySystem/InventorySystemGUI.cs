@@ -457,6 +457,7 @@ namespace InventorySystem
                     FED.button_Cancel.Enabled = false;
                     FED.button_Cancel.Visible = false;
 
+                    FED.Text = "Інформація про пристрій";
                     FED.Show();
                 }
 
@@ -496,6 +497,7 @@ namespace InventorySystem
                     FEM.button_Cancel.Enabled = false;
                     FEM.button_Cancel.Visible = false;
 
+                    FEM.Text = "Інформація про пристрій";
                     FEM.Show();
                 }
 
@@ -535,6 +537,7 @@ namespace InventorySystem
                     FEP.button_Cancel.Enabled = false;
                     FEP.button_Cancel.Visible = false;
 
+                    FEP.Text = "Інформація про пристрій";
                     FEP.Show();
                 }
             }

@@ -288,7 +288,7 @@
             this.richTextBox_RegDate.TabIndex = 23;
             this.richTextBox_RegDate.Text = "";
             // 
-            // Form_Edit_Device
+            // Form_Edit_PC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -319,8 +319,8 @@
             this.Controls.Add(this.richTextBox_ID);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form_Edit_Device";
-            this.Text = "Додавання пристрою";
+            this.Name = "Form_Edit_PC";
+            this.Text = "Змінити інформацію";
             this.ResumeLayout(false);
             this.PerformLayout();
 

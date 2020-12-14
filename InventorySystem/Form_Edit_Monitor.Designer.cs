@@ -251,7 +251,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form_Edit_Monitor";
-            this.Text = "Додавання пристрою";
+            this.Text = "Змінити інформацію";
             this.ResumeLayout(false);
             this.PerformLayout();
 
