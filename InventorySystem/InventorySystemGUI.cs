@@ -42,7 +42,7 @@ namespace InventorySystem
                 Load_Data();
 
             else
-                Close();
+                this.Close();
         }
 
         public bool LogIn()
