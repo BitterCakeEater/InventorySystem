@@ -495,28 +495,31 @@ namespace InventorySystem
 
         private void button_ChangeInfo_Click(object sender, EventArgs e)
         {
-            var selected = dataGridView_List.SelectedCells;
-            string id = Convert.ToString(selected[1].Value);
-            string type = Convert.ToString(selected[3].Value);
-
-            if (BufferContainer == null)
+            if (dataGridView_List.SelectedRows.Count > 0)
             {
-                BufferContainer = new InventorySystemContainer(ChosenDate);
-                BufferContainer = (InventorySystemContainer)Get_MainInvSysContainer(ChosenDate).Clone();
-            }
+                var selected = dataGridView_List.SelectedCells;
+                string id = Convert.ToString(selected[1].Value);
+                string type = Convert.ToString(selected[3].Value);
 
-            if (MainInvSysController.Edit_Device(ref BufferContainer, id, type))
-            {
-                if (BufferDate == DateTime.MinValue)
+                if (BufferContainer == null)
                 {
-                    BufferDate = DateTime.Now;
-                    BufferContainer.CreationDate = BufferDate;
+                    BufferContainer = new InventorySystemContainer(ChosenDate);
+                    BufferContainer = (InventorySystemContainer)Get_MainInvSysContainer(ChosenDate).Clone();
                 }
 
-                Saved = false;
-                //Set_MainInvSysContainer(ISC, ChosenDate);
+                if (MainInvSysController.Edit_Device(ref BufferContainer, id, type))
+                {
+                    if (BufferDate == DateTime.MinValue)
+                    {
+                        BufferDate = DateTime.Now;
+                        BufferContainer.CreationDate = BufferDate;
+                    }
 
-                Set_dataGridView_List(BufferContainer);
+                    Saved = false;
+                    //Set_MainInvSysContainer(ISC, ChosenDate);
+
+                    Set_dataGridView_List(BufferContainer);
+                }
             }
         }
 
@@ -536,7 +539,29 @@ namespace InventorySystem
 
                 Create_Dates_List();
                 Set_dataGridView_List();
-            }           
+            }
+            else if (Saved)
+            {
+                BufferContainer = new InventorySystemContainer(ChosenDate);
+                BufferContainer = (InventorySystemContainer)Get_MainInvSysContainer(ChosenDate).Clone();
+
+                BufferDate = DateTime.Now;
+
+                BufferContainer.CreationDate = BufferDate;
+
+                MainInvSysContainers.Add(BufferContainer);
+
+                Saved = true;
+
+                BufferContainer = new InventorySystemContainer();
+                BufferContainer = null;
+                BufferDate = DateTime.MinValue;
+
+                FileSystem.Save_Container_List(MainInvSysContainers);
+
+                Create_Dates_List();
+                Set_dataGridView_List();
+            }
         }
 
         private void button_Load_Click(object sender, EventArgs e)

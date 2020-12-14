@@ -77,6 +77,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(571, 12);
@@ -87,18 +88,20 @@
             // 
             // button_Save
             // 
+            this.button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_Save.BackColor = System.Drawing.Color.Snow;
             this.button_Save.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Save.Location = new System.Drawing.Point(284, 401);
+            this.button_Save.Location = new System.Drawing.Point(3, 404);
             this.button_Save.Name = "button_Save";
-            this.button_Save.Size = new System.Drawing.Size(129, 31);
+            this.button_Save.Size = new System.Drawing.Size(222, 31);
             this.button_Save.TabIndex = 12;
-            this.button_Save.Text = "Зберегти зміни";
+            this.button_Save.Text = "Зберегти зміни інвентаризації";
             this.button_Save.UseVisualStyleBackColor = false;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
             // button_Load
             // 
+            this.button_Load.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Load.BackColor = System.Drawing.Color.Snow;
             this.button_Load.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_Load.Location = new System.Drawing.Point(933, 5);
@@ -111,6 +114,7 @@
             // 
             // comboBox_Dates
             // 
+            this.comboBox_Dates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox_Dates.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox_Dates.FormattingEnabled = true;
             this.comboBox_Dates.Location = new System.Drawing.Point(699, 8);
@@ -120,10 +124,10 @@
             // 
             // button_ChangeInfo
             // 
-            this.button_ChangeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_ChangeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_ChangeInfo.BackColor = System.Drawing.Color.Snow;
             this.button_ChangeInfo.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_ChangeInfo.Location = new System.Drawing.Point(732, 403);
+            this.button_ChangeInfo.Location = new System.Drawing.Point(732, 406);
             this.button_ChangeInfo.Name = "button_ChangeInfo";
             this.button_ChangeInfo.Size = new System.Drawing.Size(160, 29);
             this.button_ChangeInfo.TabIndex = 9;
@@ -133,10 +137,10 @@
             // 
             // button_Info
             // 
-            this.button_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Info.BackColor = System.Drawing.Color.Snow;
             this.button_Info.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Info.Location = new System.Drawing.Point(556, 403);
+            this.button_Info.Location = new System.Drawing.Point(556, 405);
             this.button_Info.Name = "button_Info";
             this.button_Info.Size = new System.Drawing.Size(170, 29);
             this.button_Info.TabIndex = 8;
@@ -165,10 +169,10 @@
             // 
             // button_Delete_Section
             // 
-            this.button_Delete_Section.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_Delete_Section.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Delete_Section.BackColor = System.Drawing.Color.Snow;
             this.button_Delete_Section.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Delete_Section.Location = new System.Drawing.Point(898, 403);
+            this.button_Delete_Section.Location = new System.Drawing.Point(898, 405);
             this.button_Delete_Section.Name = "button_Delete_Section";
             this.button_Delete_Section.Size = new System.Drawing.Size(132, 29);
             this.button_Delete_Section.TabIndex = 4;
@@ -178,10 +182,10 @@
             // 
             // button_Add_Section
             // 
-            this.button_Add_Section.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Add_Section.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_Add_Section.BackColor = System.Drawing.Color.Snow;
             this.button_Add_Section.Font = new System.Drawing.Font("Bahnschrift Condensed", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Add_Section.Location = new System.Drawing.Point(6, 403);
+            this.button_Add_Section.Location = new System.Drawing.Point(325, 405);
             this.button_Add_Section.Name = "button_Add_Section";
             this.button_Add_Section.Size = new System.Drawing.Size(160, 29);
             this.button_Add_Section.TabIndex = 2;
@@ -274,7 +278,7 @@
             this.ClientSize = new System.Drawing.Size(1052, 485);
             this.Controls.Add(this.tabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(680, 320);
+            this.MinimumSize = new System.Drawing.Size(1068, 524);
             this.Name = "LibraryGUI";
             this.Text = "INVEDIT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventorySystemGUI_FormClosing);
